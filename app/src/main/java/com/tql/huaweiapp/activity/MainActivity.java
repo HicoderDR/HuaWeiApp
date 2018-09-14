@@ -1,7 +1,9 @@
-package com.tql.huaweiapp;
+package com.tql.huaweiapp.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.tql.huaweiapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -8,7 +8,7 @@
         <!--<item name="colorAccent">@color/colorAccent</item>-->
     </style>
 
-    <style name="Theme.Application.Pink" parent="Theme.AppCompat.Light">
+    <style name="Theme.Application.Pink" parent="Base.Theme.AppCompat.Light">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
