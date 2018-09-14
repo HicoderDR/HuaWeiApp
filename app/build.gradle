@@ -8,6 +8,10 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+
+        renderscriptTargetApi 25    //添加
+        renderscriptSupportModeEnabled true  //添加
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,4 +29,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //gaosi mohu
+    implementation 'com.github.javaexception:FuzzyBackground:v1.0'
 }
