@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-
     }
 
     private void initView() {
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
             case R.id.avatar_imageview:
+                slidePanel.openPane();
                 break;
         }
     }
