@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/primary_light"
     tools:context=".activity.RegisterOrLoginActivity">
 
@@ -14,7 +15,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:weightSum="10"
             android:orientation="vertical">
+
+            <com.tql.huaweiapp.view.ArcView
+                android:layout_weight="5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:bgColor="@color/primary"
+                app:arcHeight="30dp"/>
 
         </LinearLayout>
 
@@ -27,13 +36,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="60dp"
                 android:layout_marginStart="60dp"
-                android:padding="5dp"
                 android:background="@drawable/sign_in_or_sign_up_area_background"
                 android:elevation="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <EditText
                     android:id="@+id/email_edittext"
