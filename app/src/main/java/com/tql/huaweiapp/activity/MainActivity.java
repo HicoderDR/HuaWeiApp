@@ -1,6 +1,8 @@
 package com.tql.huaweiapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private TextView noRecordsTextview;
     private LinearLayout otherChatListLinearlayout;
+    private FloatingActionButton newChatActionbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         otherChatListLinearlayout = findViewById(R.id.other_chat_list_linearlayout);
         slidePanel = findViewById(R.id.slide_panel);
 
-        
+        newChatActionbutton = findViewById(R.id.new_chat_actionbutton);
+        newChatActionbutton.setOnClickListener(this);
+
+        initChatList();
+    }
+
+    //初始化聊天列表
+    private void initChatList() {
+
     }
 
     @Override
@@ -53,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.avatar_imageview:
                 slidePanel.openPane();
+                break;
+            case R.id.new_chat_actionbutton:
+                startActivity(new Intent(MainActivity.this, NewChatActivity.class));
                 break;
         }
     }
