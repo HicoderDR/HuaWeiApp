@@ -78,6 +78,18 @@
         android:orientation="vertical"
         android:weightSum="9">
 
+        <ScrollView
+            android:id="@+id/message_list_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="vertical" />
+        </ScrollView>
+
         <LinearLayout
             android:id="@+id/message_input_linearlayout"
             android:layout_width="match_parent"
