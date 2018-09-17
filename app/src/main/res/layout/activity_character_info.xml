@@ -26,6 +26,15 @@
             android:layout_weight="6"
             android:orientation="vertical">
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </ScrollView>
         </LinearLayout>
     </LinearLayout>
 
@@ -50,7 +59,7 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/back_imageview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -65,10 +74,10 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_gravity="right"
+                    android:id="@+id/menu_imageview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="right"
                     app:srcCompat="@mipmap/more" />
 
             </LinearLayout>
