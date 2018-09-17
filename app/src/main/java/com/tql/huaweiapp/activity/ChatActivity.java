@@ -8,10 +8,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tql.huaweiapp.R;
 
-public class ChatActivity extends AppCompatActivity implements View.OnClickListener {
+public class ChatActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
     private ImageView backImageview;
     /**
@@ -25,6 +26,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView sendMessageImageview;
     private LinearLayout messageInputLinearlayout;
     private LinearLayout voiceRecordLinearlayout;
+    private LinearLayout record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         sendMessageImageview.setOnClickListener(this);
         messageInputLinearlayout = findViewById(R.id.message_input_linearlayout);
         voiceRecordLinearlayout = findViewById(R.id.voice_record_linearlayout);
-
+        record = findViewById(R.id.record_linearlayout);
+        record.setOnClickListener(this);
+        record.setOnLongClickListener(this);
     }
 
     @Override
@@ -63,7 +67,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.character_info_imageview:
-                startActivity(new Intent(ChatActivity.this,CharacterInfoActivity.class));
+                startActivity(new Intent(ChatActivity.this, CharacterInfoActivity.class));
                 break;
             case R.id.micro_phone_imageview:
                 voiceRecordLinearlayout.setVisibility(View.VISIBLE);
@@ -75,6 +79,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.message_edittext:
                 voiceRecordLinearlayout.setVisibility(View.GONE);
                 break;
+            case R.id.record_linearlayout:
+                Toast.makeText(this, "请长按麦克风按钮进行录音！", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
@@ -83,5 +90,18 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void sendMessage() {
 
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        switch (view.getId()) {
+            case R.id.record_linearlayout:
+                // TODO: 2018/9/17 开始录音
+
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }
