@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ArcView">
-        <attr name="arcHeight" format="dimension"/>
-        <attr name="bgColor" format="color"/>
+        <attr name="arcHeight" format="dimension" />
+        <attr name="bgColor" format="color" />
+    </declare-styleable>
+    <declare-styleable name="ArcImageView">
+        <attr name="arcHeight" format="dimension" />
     </declare-styleable>
 </resources>
