@@ -28,7 +28,7 @@ public class ArcImageView extends AppCompatImageView {
     public ArcImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ArcImageView);
-        mArcHeight = typedArray.getDimensionPixelSize(R.styleable.ArcImageView_arcHeight, 0);
+        mArcHeight = typedArray.getDimensionPixelSize(R.styleable.ArcImageView_arcImageHeight, 0);
     }
 
     @Override

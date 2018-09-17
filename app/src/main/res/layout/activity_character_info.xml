@@ -18,7 +18,7 @@
             android:layout_height="0dp"
             android:layout_weight="4"
             android:scaleType="centerCrop"
-            app:arcHeight="50dp"
+            app:arcImageHeight="50dp"
             app:srcCompat="@mipmap/initial_avatar" />
 
         <LinearLayout

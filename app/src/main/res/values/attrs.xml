@@ -5,6 +5,6 @@
         <attr name="bgColor" format="color" />
     </declare-styleable>
     <declare-styleable name="ArcImageView">
-        <attr name="arcHeight" format="dimension" />
+        <attr name="arcImageHeight" format="dimension" />
     </declare-styleable>
 </resources>
