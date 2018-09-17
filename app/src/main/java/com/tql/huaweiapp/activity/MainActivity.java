@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         otherChatListLinearlayout = findViewById(R.id.other_chat_list_linearlayout);
         slidePanel = findViewById(R.id.slide_panel);
 
-
+        
     }
 
     @Override

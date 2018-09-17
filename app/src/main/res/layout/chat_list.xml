@@ -59,73 +59,95 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:layout_weight="9"
-        android:orientation="vertical">
-
-        <android.support.v4.widget.NestedScrollView
+        android:layout_height="0dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="我的收藏"
-                    android:textColor="@color/accent"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/no_favorite_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="暂无收藏记录"
-                    android:textSize="14sp" />
+                android:layout_height="match_parent"
+                android:fillViewport="true">
 
                 <LinearLayout
-                    android:id="@+id/favoreites_linearlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="我的收藏"
+                        android:textColor="@color/accent"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/no_favorite_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="暂无收藏记录"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/favoreites_linearlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="其他聊天"
+                        android:textColor="@color/accent"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/no_records_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="暂无聊天记录"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/other_chat_list_linearlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
                 </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="其他聊天"
-                    android:textColor="@color/accent"
-                    android:textSize="16sp" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/no_records_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="暂无聊天记录"
-                    android:textSize="14sp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:id="@+id/other_chat_list_linearlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/floatingActionButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="20dp"
+                android:layout_gravity="right"
+                android:clickable="true"
+                app:srcCompat="@android:drawable/ic_input_add" />
+        </LinearLayout>
 
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+    </FrameLayout>
 
-    </LinearLayout>
 </LinearLayout>
