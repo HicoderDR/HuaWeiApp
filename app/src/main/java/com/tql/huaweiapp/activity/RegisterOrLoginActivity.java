@@ -11,6 +11,8 @@ import com.tql.huaweiapp.R;
 
 public class RegisterOrLoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final boolean SIGN_IN = true;
+    private static final boolean SIGN_UP = false;
     private EditText emailEdittext;
     private EditText passwordEdittext;
     private EditText passwordConfirmEdittext;
@@ -22,6 +24,11 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
      * 注册
      */
     private Button signUpButton;
+
+    /**
+     * 默认是登录按钮被选中
+     */
+    private boolean buttonSelected = SIGN_IN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +54,20 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
             default:
                 break;
             case R.id.sign_in_button:
-                signIn();
+                signInButton.setTextColor(getResources().getColor(R.color.white));
+                signInButton.setBackground(getResources().getDrawable(R.drawable.button_selected));
+                signUpButton.setBackground(getResources().getDrawable(R.drawable.button_unselected));
+                signUpButton.setTextColor(getResources().getColor(R.color.primary));
+                if (buttonSelected == SIGN_IN) signIn();
+                buttonSelected = SIGN_IN;
                 break;
             case R.id.sign_up_button:
-                signUp();
+                signUpButton.setTextColor(getResources().getColor(R.color.white));
+                signUpButton.setBackground(getResources().getDrawable(R.drawable.button_selected));
+                signInButton.setBackground(getResources().getDrawable(R.drawable.button_unselected));
+                signInButton.setTextColor(getResources().getColor(R.color.primary));
+                if (buttonSelected == SIGN_UP) signUp();
+                buttonSelected = SIGN_UP;
                 break;
         }
     }
