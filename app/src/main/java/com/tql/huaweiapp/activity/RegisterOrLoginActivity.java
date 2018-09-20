@@ -1,13 +1,18 @@
 package com.tql.huaweiapp.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.view.AlertDialogIOS;
 
 public class RegisterOrLoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -58,6 +63,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                 signInButton.setBackground(getResources().getDrawable(R.drawable.button_selected));
                 signUpButton.setBackground(getResources().getDrawable(R.drawable.button_unselected));
                 signUpButton.setTextColor(getResources().getColor(R.color.primary));
+                passwordConfirmEdittext.setVisibility(View.GONE);
                 if (buttonSelected == SIGN_IN) signIn();
                 buttonSelected = SIGN_IN;
                 break;
@@ -66,6 +72,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                 signUpButton.setBackground(getResources().getDrawable(R.drawable.button_selected));
                 signInButton.setBackground(getResources().getDrawable(R.drawable.button_unselected));
                 signInButton.setTextColor(getResources().getColor(R.color.primary));
+                passwordConfirmEdittext.setVisibility(View.VISIBLE);
                 if (buttonSelected == SIGN_UP) signUp();
                 buttonSelected = SIGN_UP;
                 break;
@@ -77,7 +84,33 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
      */
     private void signUp() {
         // TODO: 2018/9/15 注册逻辑
+        ProgressDialog waitingDialog = new ProgressDialog(this);
+        waitingDialog.setIndeterminate(true);
+        waitingDialog.setMessage("发送验证码......");
+        waitingDialog.setCancelable(false);
+        waitingDialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
+        waitingDialog.show();
+        WindowManager.LayoutParams params = waitingDialog.getWindow().getAttributes();
+        params.width = 450;
+        params.gravity = Gravity.CENTER;
+        waitingDialog.getWindow().setAttributes(params);
 
+        waitingDialog.dismiss();
+
+        new AlertDialogIOS(this).builder()
+                .setCancelable(false)
+                .setTitle("邮箱验证码")
+                .setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).setNegativeButton("取消", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        }).show();
     }
 
     /**

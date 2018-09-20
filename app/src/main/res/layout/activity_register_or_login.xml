@@ -110,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:background="@drawable/button_selected"
-                        android:text="登录"
+                        android:text="登  录"
                         android:textColor="@android:color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -121,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:background="@drawable/button_unselected"
-                        android:text="注册"
+                        android:text="注  册"
                         android:textColor="@color/accent"
                         android:textSize="18sp"
                         android:textStyle="bold" />
