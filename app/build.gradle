@@ -38,4 +38,8 @@ dependencies {
 
     //验证码输入框
     implementation 'com.justkiddingbaby:vercodeedittext:1.0.5'
+
+    //日期选择器轮子
+    implementation  'com.contrarywind:Android-PickerView:3.2.6'
+
 }
