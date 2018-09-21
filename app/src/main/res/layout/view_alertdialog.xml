@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/lLayout_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/alert_ios_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/txt_title"
@@ -25,9 +26,25 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:gravity="center"
+        android:gravity="left"
         android:textColor="@color/black"
         android:textSize="16sp" />
+
+    <com.jkb.vcedittext.VerificationCodeEditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:inputType="number"
+        android:textColor="@color/primary"
+        android:textSize="40sp"
+        app:bottomLineHeight="2dp"
+        app:bottomLineNormalColor="@color/secondary_text"
+        app:bottomLineSelectedColor="@color/accent"
+        app:figures="6"
+        app:selectedBackgroundColor="@color/blank_color"
+        app:verCodeMargin="10dp"/>
 
     <ImageView
         android:layout_width="match_parent"

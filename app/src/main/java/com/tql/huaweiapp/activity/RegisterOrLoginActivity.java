@@ -100,6 +100,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
         new AlertDialogIOS(this).builder()
                 .setCancelable(false)
                 .setTitle("邮箱验证码")
+                .setMsg("请填写你收到的六位验证码：")
                 .setPositiveButton("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

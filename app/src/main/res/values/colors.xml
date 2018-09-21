@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="primary">#E91E63</color>
-  <color name="primary_dark">#C2185B</color>
-  <color name="primary_light">#F8BBD0</color>
-  <color name="background_color">#ffdfea</color>
-  <color name="accent">#FF4081</color>
-  <color name="primary_text">#212121</color>
-  <color name="secondary_text">#757575</color>
-  <color name="icons">#FFFFFF</color>
-  <color name="white">#ffffff</color>
-  <color name="divider">#BDBDBD</color>
+    <color name="primary">#E91E63</color>
+    <color name="primary_dark">#C2185B</color>
+    <color name="primary_light">#F8BBD0</color>
+    <color name="background_color">#ffdfea</color>
+    <color name="accent">#FF4081</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="white">#ffffff</color>
+    <color name="divider">#BDBDBD</color>
 
-  <color name="trans">#00000000</color>
-  <color name="black">#000000</color>
-  <color name="alertdialog_line">#ababab</color>
-  <color name="actionsheet_blue">#037BFF</color>
-  <color name="actionsheet_red">#FD4A2E</color>
-  <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="trans">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="alertdialog_line">#ababab</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="blank_color">#00ffffff</color>
 </resources>
