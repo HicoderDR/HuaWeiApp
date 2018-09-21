@@ -104,7 +104,9 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                 .setPositiveButton("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // TODO: 18-9-21 注册逻辑
 
+                        startActivity(new Intent(RegisterOrLoginActivity.this, CompleteUserInfoActivity.class));
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
             @Override
