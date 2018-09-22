@@ -14,7 +14,10 @@ import android.widget.ImageView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.constant.Hobby;
 import com.tql.huaweiapp.view.ActionSheetIOS;
+import com.tql.huaweiapp.view.TagDialog;
+import com.tql.huaweiapp.view.WrapLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -118,6 +121,31 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
                         }).show();
                 break;
             case R.id.tag_edittext:
+                new TagDialog(this).builder()
+                        .setTitle("选择个性标签")
+                        .setPositiveButton("确定", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int[] selectedTag = WrapLayout.selectedTag;
+                                StringBuffer tags = new StringBuffer();
+                                for (int i1 = 0, selectedTagLength = selectedTag.length; i1 < selectedTagLength; i1++) {
+                                    int i = selectedTag[i1];
+                                    if (i == 1) {
+                                        tags.append(Hobby.HOBBIES[i1]).append(",");
+                                    }
+                                }
+                                if (!tags.toString().isEmpty())
+                                    tagEdittext.setText(tags.substring(0, tags.length() - 1));
+                            }
+                        })
+                        .setNegativeButton("取消", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        })
+                        .initTag(tagEdittext.getText().toString())
+                        .setCancelable(false).show();
                 break;
             case R.id.save_info_button:
                 saveInfo();
