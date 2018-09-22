@@ -1,6 +1,8 @@
 package com.tql.huaweiapp.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -10,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView avatarImageview;
+    private ImageView avatarBackgroundImageview;
     private SlidingPaneLayout slidePanel;
     /**
      * 暂无收藏记录
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         avatarImageview = findViewById(R.id.avatar_imageview);
         avatarImageview.setOnClickListener(this);
+        avatarBackgroundImageview = findViewById(R.id.avatar_background_imageview);
+        setBackground();//侧栏头像设置高斯模糊背景
         slidePanel = findViewById(R.id.slide_panel);
         avatarImageview = findViewById(R.id.avatar_imageview);
         noFavoriteTextview = findViewById(R.id.no_favorite_textview);
@@ -69,5 +75,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, NewChatActivity.class));
                 break;
         }
+    }
+
+    private void setBackground() {
+        final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.default_menu_bg);
+
+//        2.高斯模糊：
+        Bitmap finalBitmap = Fuzzy_Background.with(this)
+                .bitmap(bitmap) //要模糊的图片
+                .radius(10)//模糊半径
+                .blur();
+
+//        3.设置bitmap：
+        avatarBackgroundImageview.setImageBitmap(finalBitmap);
+
     }
 }

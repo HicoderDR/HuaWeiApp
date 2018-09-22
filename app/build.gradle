@@ -42,4 +42,7 @@ dependencies {
     //日期选择器轮子
     implementation  'com.contrarywind:Android-PickerView:3.2.6'
 
+    //
+    implementation 'com.makeramen:roundedimageview:2.2.1'
+
 }
