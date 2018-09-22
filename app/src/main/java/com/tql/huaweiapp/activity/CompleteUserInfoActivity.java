@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.view.ActionSheetIOS;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -96,6 +97,25 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
             case R.id.age_edittext:
                 break;
             case R.id.gendet_edittext:
+                new ActionSheetIOS(this).builder()
+                        .addSheetItem("女生", ActionSheetIOS.SheetItemColor.Blue, new ActionSheetIOS.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                gendetEdittext.setText("女生");
+                            }
+                        })
+                        .addSheetItem("男生", ActionSheetIOS.SheetItemColor.Blue, new ActionSheetIOS.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                gendetEdittext.setText("男生");
+                            }
+                        })
+                        .addSheetItem("其他?", ActionSheetIOS.SheetItemColor.Blue, new ActionSheetIOS.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                gendetEdittext.setText("第三性别");
+                            }
+                        }).show();
                 break;
             case R.id.tag_edittext:
                 break;
