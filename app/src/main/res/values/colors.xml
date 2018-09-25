@@ -18,4 +18,10 @@
     <color name="actionsheet_red">#FD4A2E</color>
     <color name="actionsheet_gray">#8F8F8F</color>
     <color name="blank_color">#00ffffff</color>
+
+    <!--<color name="primary">#6cbff9</color>-->
+    <!--<color name="primary_dark">#389ee6</color>-->
+    <!--<color name="primary_light">#9386caff</color>-->
+    <!--<color name="background_color">#8acbe6ff</color>-->
+    <!--<color name="accent">#4e85d6</color>-->
 </resources>
