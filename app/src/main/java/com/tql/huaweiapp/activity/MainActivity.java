@@ -8,12 +8,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.view.ChatHistoryCard;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -60,7 +62,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //初始化聊天列表
     private void initChatList() {
-
+        noRecordsTextview.setVisibility(View.GONE);
+        ChatHistoryCard historyCard = new ChatHistoryCard(this);
+        historyCard.setName("畜生");
+        historyCard.setLastMessage("你是畜生吧你?");
+        otherChatListLinearlayout.addView(historyCard);
+        ChatHistoryCard historyCard1 = new ChatHistoryCard(this);
+        historyCard1.setName("shdufa");
+        historyCard1.setLastMessage("hoashfoiioshgrioshgifoshofhsg");
+        otherChatListLinearlayout.addView(historyCard1);
     }
 
     @Override
