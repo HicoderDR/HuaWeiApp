@@ -1,6 +1,7 @@
 package com.tql.huaweiapp.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -76,7 +77,7 @@ public class WrapLayout extends ViewGroup {
             ((TextView) btn).setTextSize(textSize);
             if (selectedTag[i] == 1) {
                 btn.setBackground(getResources().getDrawable(R.drawable.selected_wrap_layout_textview_bg));
-                ((TextView) btn).setTextColor(getResources().getColor(R.color.white));
+                ((TextView) btn).setTextColor(Color.WHITE);
             }
             btn.setClickable(true);
             btn.setPadding(dip2px(context, pl), dip2px(context, pt), dip2px(context, pr), dip2px(context, pb));
@@ -91,11 +92,11 @@ public class WrapLayout extends ViewGroup {
 //                    markClickListener.clickMark(finalI);
                     if (selectedTag[finalI] == 1) {
                         btn.setBackground(getResources().getDrawable(R.drawable.unselected_wrap_layout_textview_bg));
-                        ((TextView) btn).setTextColor(getResources().getColor(R.color.accent));
+                        ((TextView) btn).setTextColor(R.attr.colorAccent);
                         selectedTag[finalI] = 0;
                     } else {
                         btn.setBackground(getResources().getDrawable(R.drawable.selected_wrap_layout_textview_bg));
-                        ((TextView) btn).setTextColor(getResources().getColor(R.color.white));
+                        ((TextView) btn).setTextColor(Color.WHITE);
                         selectedTag[finalI] = 1;
                     }
                 }
