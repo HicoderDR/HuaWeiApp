@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:orientation="horizontal"
-    android:background="@color/white"
+    android:background="@android:color/white"
     android:weightSum="4"
     android:baselineAligned="false">
 

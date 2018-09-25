@@ -37,11 +37,11 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:inputType="number"
-        android:textColor="@color/primary"
+        android:textColor="?attr/colorPrimary"
         android:textSize="40sp"
         app:bottomLineHeight="2dp"
         app:bottomLineNormalColor="@color/secondary_text"
-        app:bottomLineSelectedColor="@color/accent"
+        app:bottomLineSelectedColor="?attr/colorAccent"
         app:figures="6"
         app:selectedBackgroundColor="@color/blank_color"
         app:verCodeMargin="10dp"/>

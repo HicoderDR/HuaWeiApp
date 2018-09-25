@@ -4,11 +4,11 @@
 
     <!-- 填充的颜色 -->
 
-    <solid android:color="@color/primary" />
+    <solid android:color="?attr/colorPrimary" />
 
 
     <!-- 设置边框宽度 -->
-    <stroke android:width="2dp" android:color="@color/primary"/>
+    <stroke android:width="2dp" android:color="?attr/colorPrimary"/>
 
     <!-- 四个角的弧度 -->
     <corners

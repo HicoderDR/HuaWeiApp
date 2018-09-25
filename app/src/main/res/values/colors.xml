@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#9ad92c46</color>
-    <color name="primary_dark">#9ed12348</color>
-    <color name="primary_light">#c5f4c5d5</color>
-    <color name="background_color">#51fdb7b8</color>
-    <color name="accent">#67ff2130</color>
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#757575</color>
-    <color name="icons">#FFFFFF</color>
-    <color name="white">#ffffff</color>
-    <color name="divider">#BDBDBD</color>
+    <!--红色主题-->
+    <color name="red_primary">#9ad92c46</color>
+    <color name="red_primary_dark">#9ed12348</color>
+    <color name="red_primary_light">#c5f4c5d5</color>
+    <color name="red_background_color">#51fdb7b8</color>
+    <color name="red_accent">#67ff2130</color>
 
+    <!--蓝色主题-->
+    <color name="blue_primary">#6cbff9</color>
+    <color name="blue_primary_dark">#389ee6</color>
+    <color name="blue_primary_light">#9386caff</color>
+    <color name="blue_background_color">#8acbe6ff</color>
+    <color name="blue_accent">#4e85d6</color>
+
+    <!--粉色主题-->
+    <color name="pink_primary">#E91E63</color>
+    <color name="pink_primary_dark">#C2185B</color>
+    <color name="pink_primary_light">#F8BBD0</color>
+    <color name="pink_accent">#FF4081</color>
+    <color name="pink_background_color">#ffdfea</color>
+
+    <!--其他颜色值-->
     <color name="trans">#00000000</color>
     <color name="black">#000000</color>
     <color name="alertdialog_line">#ababab</color>
@@ -19,9 +30,9 @@
     <color name="actionsheet_gray">#8F8F8F</color>
     <color name="blank_color">#00ffffff</color>
 
-    <!--<color name="primary">#6cbff9</color>-->
-    <!--<color name="primary_dark">#389ee6</color>-->
-    <!--<color name="primary_light">#9386caff</color>-->
-    <!--<color name="background_color">#8acbe6ff</color>-->
-    <!--<color name="accent">#4e85d6</color>-->
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
+
 </resources>

@@ -7,4 +7,9 @@
     <declare-styleable name="ArcImageView">
         <attr name="arcImageHeight" format="dimension" />
     </declare-styleable>
+
+    <!--自定义style中的属性-->
+    <attr name="background_color" format="reference"/>
+    <attr name="colorPrimaryLight" format="reference"/>
+
 </resources>
