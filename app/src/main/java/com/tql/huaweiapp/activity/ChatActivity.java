@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.utils.CommonUtils;
 
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
@@ -31,6 +32,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_chat);
         initView();
 

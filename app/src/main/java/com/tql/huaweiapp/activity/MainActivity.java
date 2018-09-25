@@ -8,13 +8,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.view.ChatHistoryCard;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -33,10 +34,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView noRecordsTextview;
     private LinearLayout otherChatListLinearlayout;
     private FloatingActionButton newChatActionbutton;
+    private RoundedImageView themeAImageview;
+    private RoundedImageView themeBImageview;
+    private RoundedImageView themeCImageview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_main);
         initView();
     }
@@ -58,6 +63,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         newChatActionbutton.setOnClickListener(this);
 
         initChatList();
+        themeAImageview = findViewById(R.id.theme_a_imageview);
+        themeAImageview.setOnClickListener(this);
+        themeBImageview = findViewById(R.id.theme_b_imageview);
+        themeBImageview.setOnClickListener(this);
+        themeCImageview = findViewById(R.id.theme_c_imageview);
+        themeCImageview.setOnClickListener(this);
     }
 
     //初始化聊天列表
@@ -84,7 +95,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.new_chat_actionbutton:
                 startActivity(new Intent(MainActivity.this, NewChatActivity.class));
                 break;
+            case R.id.theme_a_imageview:
+                CommonUtils.setTheme(this,CommonUtils.THEME_PINK);
+                refreshTheme();
+                break;
+            case R.id.theme_b_imageview:
+                CommonUtils.setTheme(this,CommonUtils.THEME_RED);
+                refreshTheme();
+                break;
+            case R.id.theme_c_imageview:
+                CommonUtils.setTheme(this,CommonUtils.THEME_BLUE);
+                refreshTheme();
+                break;
         }
+    }
+
+    //修改主题后刷新页面
+    private void refreshTheme() {
+        finish();
+        final Intent intent=getIntent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(0,0);
     }
 
     private void setBackground() {

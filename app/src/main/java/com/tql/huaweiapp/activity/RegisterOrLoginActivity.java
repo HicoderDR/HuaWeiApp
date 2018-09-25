@@ -2,6 +2,7 @@ package com.tql.huaweiapp.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.view.AlertDialogIOS;
 
 public class RegisterOrLoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -38,6 +40,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_register_or_login);
         initView();
 
@@ -59,19 +62,19 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
             default:
                 break;
             case R.id.sign_in_button:
-                signInButton.setTextColor(getResources().getColor(R.color.white));
+                signInButton.setTextColor(Color.WHITE);
                 signInButton.setBackground(getResources().getDrawable(R.drawable.button_selected));
                 signUpButton.setBackground(getResources().getDrawable(R.drawable.button_unselected));
-                signUpButton.setTextColor(getResources().getColor(R.color.primary));
+                signUpButton.setTextColor(R.attr.colorPrimary);
                 passwordConfirmEdittext.setVisibility(View.GONE);
                 if (buttonSelected == SIGN_IN) signIn();
                 buttonSelected = SIGN_IN;
                 break;
             case R.id.sign_up_button:
-                signUpButton.setTextColor(getResources().getColor(R.color.white));
+                signUpButton.setTextColor(Color.WHITE);
                 signUpButton.setBackground(getResources().getDrawable(R.drawable.button_selected));
                 signInButton.setBackground(getResources().getDrawable(R.drawable.button_unselected));
-                signInButton.setTextColor(getResources().getColor(R.color.primary));
+                signInButton.setTextColor(R.attr.colorPrimary);
                 passwordConfirmEdittext.setVisibility(View.VISIBLE);
                 if (buttonSelected == SIGN_UP) signUp();
                 buttonSelected = SIGN_UP;

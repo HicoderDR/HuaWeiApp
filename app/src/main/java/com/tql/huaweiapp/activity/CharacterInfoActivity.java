@@ -10,6 +10,7 @@ import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.utils.CommonUtils;
 
 public class CharacterInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -20,6 +21,7 @@ public class CharacterInfoActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_character_info);
         initView();
     }

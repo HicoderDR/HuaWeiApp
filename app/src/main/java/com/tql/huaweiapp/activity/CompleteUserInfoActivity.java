@@ -15,6 +15,7 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.constant.Hobby;
+import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.view.ActionSheetIOS;
 import com.tql.huaweiapp.view.TagDialog;
 import com.tql.huaweiapp.view.WrapLayout;
@@ -38,6 +39,7 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_complete_user_info);
         initView();
 

@@ -7,6 +7,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.utils.CommonUtils;
 
 public class NewChatActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -18,6 +19,7 @@ public class NewChatActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_new_chat);
         initView();
     }
