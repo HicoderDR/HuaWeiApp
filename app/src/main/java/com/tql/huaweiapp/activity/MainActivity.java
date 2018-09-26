@@ -7,16 +7,19 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.utils.CommonUtils;
-import com.tql.huaweiapp.view.ChatHistoryCard;
+import com.tql.huaweiapp.view.ChatListAdapter;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,16 +30,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 暂无收藏记录
      */
     private TextView noFavoriteTextview;
-    private LinearLayout favoreitesLinearlayout;
     /**
      * 暂无聊天记录
      */
     private TextView noRecordsTextview;
-    private LinearLayout otherChatListLinearlayout;
     private FloatingActionButton newChatActionbutton;
     private RoundedImageView themeAImageview;
     private RoundedImageView themeBImageview;
     private RoundedImageView themeCImageview;
+    private RecyclerView favoreitesRecyclerview;
+    private RecyclerView otherChatListRecyclerview;
+    private LinearLayoutManager layoutManager;
+    private ChatListAdapter chatListAdapter;
+    private ChatListAdapter favoriteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,34 +60,75 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         slidePanel = findViewById(R.id.slide_panel);
         avatarImageview = findViewById(R.id.avatar_imageview);
         noFavoriteTextview = findViewById(R.id.no_favorite_textview);
-        favoreitesLinearlayout = findViewById(R.id.favoreites_linearlayout);
         noRecordsTextview = findViewById(R.id.no_records_textview);
-        otherChatListLinearlayout = findViewById(R.id.other_chat_list_linearlayout);
         slidePanel = findViewById(R.id.slide_panel);
+        favoreitesRecyclerview = findViewById(R.id.favoreites_recyclerview);
+        otherChatListRecyclerview = findViewById(R.id.other_chat_list_recyclerview);
 
         newChatActionbutton = findViewById(R.id.new_chat_actionbutton);
         newChatActionbutton.setOnClickListener(this);
 
         initChatList();
+        initFavoriteList();
+
         themeAImageview = findViewById(R.id.theme_a_imageview);
         themeAImageview.setOnClickListener(this);
         themeBImageview = findViewById(R.id.theme_b_imageview);
         themeBImageview.setOnClickListener(this);
         themeCImageview = findViewById(R.id.theme_c_imageview);
         themeCImageview.setOnClickListener(this);
+
+
+    }
+
+    /**
+     * 收藏人物的初始化
+     */
+    private void initFavoriteList() {
+        noFavoriteTextview.setVisibility(View.GONE);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        ArrayList<Integer> avatars = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> lastMessages = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            avatars.add(R.mipmap.ic_launcher);
+            names.add("曾老师" + i);
+            lastMessages.add("曾老师" + i + "是个畜生");
+        }
+        favoriteAdapter = new ChatListAdapter(avatars, names, lastMessages);
+        favoriteAdapter.setOnItemClickListener(new ChatListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+            }
+        });
+        favoreitesRecyclerview.setHasFixedSize(true);
+        favoreitesRecyclerview.setLayoutManager(layoutManager);
+        favoreitesRecyclerview.setAdapter(favoriteAdapter);
     }
 
     //初始化聊天列表
     private void initChatList() {
         noRecordsTextview.setVisibility(View.GONE);
-        ChatHistoryCard historyCard = new ChatHistoryCard(this);
-        historyCard.setName("畜生");
-        historyCard.setLastMessage("你是畜生吧你?");
-        otherChatListLinearlayout.addView(historyCard);
-        ChatHistoryCard historyCard1 = new ChatHistoryCard(this);
-        historyCard1.setName("shdufa");
-        historyCard1.setLastMessage("hoashfoiioshgrioshgifoshofhsg");
-        otherChatListLinearlayout.addView(historyCard1);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        ArrayList<Integer> avatars = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> lastMessages = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            avatars.add(R.mipmap.ic_launcher);
+            names.add("曾老师" + i);
+            lastMessages.add("曾老师" + i + "是个傻逼");
+        }
+        chatListAdapter = new ChatListAdapter(avatars, names, lastMessages);
+        chatListAdapter.setOnItemClickListener(new ChatListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+            }
+        });
+        otherChatListRecyclerview.setHasFixedSize(true);
+        otherChatListRecyclerview.setLayoutManager(layoutManager);
+        otherChatListRecyclerview.setAdapter(chatListAdapter);
     }
 
     @Override
@@ -96,15 +143,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, NewChatActivity.class));
                 break;
             case R.id.theme_a_imageview:
-                CommonUtils.setTheme(this,CommonUtils.THEME_PINK);
+                CommonUtils.setTheme(this, CommonUtils.THEME_PINK);
                 refreshTheme();
                 break;
             case R.id.theme_b_imageview:
-                CommonUtils.setTheme(this,CommonUtils.THEME_RED);
+                CommonUtils.setTheme(this, CommonUtils.THEME_RED);
                 refreshTheme();
                 break;
             case R.id.theme_c_imageview:
-                CommonUtils.setTheme(this,CommonUtils.THEME_BLUE);
+                CommonUtils.setTheme(this, CommonUtils.THEME_BLUE);
                 refreshTheme();
                 break;
         }
@@ -113,10 +160,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //修改主题后刷新页面
     private void refreshTheme() {
         finish();
-        final Intent intent=getIntent();
+        final Intent intent = getIntent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
     }
 
     private void setBackground() {

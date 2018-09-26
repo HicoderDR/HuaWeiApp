@@ -63,8 +63,8 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                 break;
             case R.id.sign_in_button:
                 signInButton.setTextColor(Color.WHITE);
-                signInButton.setBackground(getResources().getDrawable(R.drawable.button_selected));
-                signUpButton.setBackground(getResources().getDrawable(R.drawable.button_unselected));
+                signInButton.setBackground(getResources().getDrawable(R.drawable.button_selected, getTheme()));
+                signUpButton.setBackground(getResources().getDrawable(R.drawable.button_unselected, getTheme()));
                 signUpButton.setTextColor(R.attr.colorPrimary);
                 passwordConfirmEdittext.setVisibility(View.GONE);
                 if (buttonSelected == SIGN_IN) signIn();
@@ -72,8 +72,8 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                 break;
             case R.id.sign_up_button:
                 signUpButton.setTextColor(Color.WHITE);
-                signUpButton.setBackground(getResources().getDrawable(R.drawable.button_selected));
-                signInButton.setBackground(getResources().getDrawable(R.drawable.button_unselected));
+                signUpButton.setBackground(getResources().getDrawable(R.drawable.button_selected, getTheme()));
+                signInButton.setBackground(getResources().getDrawable(R.drawable.button_unselected, getTheme()));
                 signInButton.setTextColor(R.attr.colorPrimary);
                 passwordConfirmEdittext.setVisibility(View.VISIBLE);
                 if (buttonSelected == SIGN_UP) signUp();

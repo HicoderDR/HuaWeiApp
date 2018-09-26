@@ -76,7 +76,7 @@ public class WrapLayout extends ViewGroup {
             ((TextView) btn).setText(text);
             ((TextView) btn).setTextSize(textSize);
             if (selectedTag[i] == 1) {
-                btn.setBackground(getResources().getDrawable(R.drawable.selected_wrap_layout_textview_bg));
+                btn.setBackground(getResources().getDrawable(R.drawable.selected_wrap_layout_textview_bg,context.getTheme()));
                 ((TextView) btn).setTextColor(Color.WHITE);
             }
             btn.setClickable(true);
@@ -91,11 +91,11 @@ public class WrapLayout extends ViewGroup {
                 public void onClick(View v) {
 //                    markClickListener.clickMark(finalI);
                     if (selectedTag[finalI] == 1) {
-                        btn.setBackground(getResources().getDrawable(R.drawable.unselected_wrap_layout_textview_bg));
+                        btn.setBackground(getResources().getDrawable(R.drawable.unselected_wrap_layout_textview_bg,context.getTheme()));
                         ((TextView) btn).setTextColor(R.attr.colorAccent);
                         selectedTag[finalI] = 0;
                     } else {
-                        btn.setBackground(getResources().getDrawable(R.drawable.selected_wrap_layout_textview_bg));
+                        btn.setBackground(getResources().getDrawable(R.drawable.selected_wrap_layout_textview_bg,context.getTheme()));
                         ((TextView) btn).setTextColor(Color.WHITE);
                         selectedTag[finalI] = 1;
                     }
@@ -215,7 +215,7 @@ public class WrapLayout extends ViewGroup {
                 // 将当前行的childView保存，然后开启新的ArrayList保存下一行的childView
                 mAllViews.add(lineViews);
                 lineWidth = 0;// 重置行宽
-                lineViews = new ArrayList<View>();
+                lineViews = new ArrayList<>();
             }
             /**
              * 如果不需要换行，则累加
