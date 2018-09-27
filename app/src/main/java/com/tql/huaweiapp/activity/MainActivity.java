@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayList<String> names = new ArrayList<>();
         ArrayList<String> lastMessages = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
-            avatars.add(R.mipmap.ic_launcher);
+            avatars.add(R.mipmap.default_character_avatar);
             names.add("曾老师" + i);
             lastMessages.add("曾老师" + i + "是个畜生");
         }
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayList<String> names = new ArrayList<>();
         ArrayList<String> lastMessages = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            avatars.add(R.mipmap.ic_launcher);
+            avatars.add(R.mipmap.default_character_avatar);
             names.add("曾老师" + i);
             lastMessages.add("曾老师" + i + "是个傻逼");
         }

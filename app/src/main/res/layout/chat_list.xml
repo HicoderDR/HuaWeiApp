@@ -50,13 +50,26 @@
             android:gravity="end"
             android:orientation="horizontal">
 
-            <ImageView
+            <!--<ImageView-->
+                <!--android:id="@+id/avatar_imageview"-->
+                <!--android:layout_width="45dp"-->
+                <!--android:layout_height="45dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_margin="10dp"-->
+                <!--app:srcCompat="@mipmap/default_avatar" />-->
+
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/avatar_imageview"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:layout_gravity="center"
                 android:layout_margin="10dp"
-                app:srcCompat="@mipmap/ic_launcher_round" />
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/default_avatar"
+                android:transitionName="avatar"
+                app:riv_border_color="?attr/colorPrimary"
+                app:riv_border_width="0dp"
+                app:riv_oval="true" />
         </LinearLayout>
     </LinearLayout>
 
@@ -163,7 +176,7 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_gravity="right"
-                android:layout_margin="20dp"
+                android:layout_margin="40dp"
                 android:clickable="true" />
         </LinearLayout>
 
