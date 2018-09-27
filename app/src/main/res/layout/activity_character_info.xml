@@ -6,26 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activity.CharacterInfoActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.tql.huaweiapp.view.ArcImageView
-            android:id="@+id/avatar_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:scaleType="centerCrop"
-            app:arcImageHeight="50dp"
-            app:srcCompat="@mipmap/initial_avatar" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6"
-            android:orientation="vertical">
-
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -33,10 +13,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                    android:orientation="vertical">
+                    <com.tql.huaweiapp.view.ArcImageView
+                        android:id="@+id/avatar_imageview"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:scaleType="centerCrop"
+                        app:arcImageHeight="40dp"
+                        app:srcCompat="@mipmap/initial_avatar" />
+                </LinearLayout>
             </ScrollView>
-        </LinearLayout>
-    </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -88,21 +74,20 @@
             android:id="@+id/new_chat_actionbutton"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="right"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.932"
+            app:layout_constraintHorizontal_bias="0.878"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.385"
-            app:srcCompat="@mipmap/begin_chat" />
+            app:layout_constraintVertical_bias="0.939" />
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>
