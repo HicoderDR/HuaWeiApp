@@ -17,7 +17,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.utils.CommonUtils;
-import com.tql.huaweiapp.view.ChatListAdapter;
+import com.tql.huaweiapp.adapter.ChatListAdapter;
 
 import java.util.ArrayList;
 

@@ -76,24 +76,30 @@
         android:orientation="vertical"
         android:weightSum="9">
 
-        <ScrollView
-            android:id="@+id/message_list_scrollview"
+        <!--<ScrollView-->
+            <!--android:id="@+id/message_list_scrollview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="bottom"-->
+                <!--android:orientation="vertical" />-->
+        <!--</ScrollView>-->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/message_list_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:orientation="vertical" />
-        </ScrollView>
+        </android.support.v7.widget.RecyclerView>
 
         <LinearLayout
             android:id="@+id/message_input_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="?attr/background_color"
-            android:elevation="10sp"
             android:orientation="horizontal"
             android:weightSum="8">
 
@@ -148,9 +154,10 @@
             android:id="@+id/voice_record_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="180dp"
+            android:background="?attr/background_color"
             android:gravity="center"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
             <!--android:visibility="gone"-->
 
             <LinearLayout
@@ -158,9 +165,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:padding="20dp"
                 android:background="@drawable/round_background"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <ImageView
                     android:id="@+id/imageView6"

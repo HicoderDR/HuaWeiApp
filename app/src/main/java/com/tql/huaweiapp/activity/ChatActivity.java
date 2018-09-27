@@ -3,6 +3,8 @@ package com.tql.huaweiapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,7 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.adapter.ChatMessageAdapter;
 import com.tql.huaweiapp.utils.CommonUtils;
+
+import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
@@ -28,6 +33,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout messageInputLinearlayout;
     private LinearLayout voiceRecordLinearlayout;
     private LinearLayout record;
+    private RecyclerView messageListRecyclerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +41,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_chat);
         initView();
-
-
     }
 
     private void initView() {
@@ -57,6 +61,33 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         record = findViewById(R.id.record_linearlayout);
         record.setOnClickListener(this);
         record.setOnLongClickListener(this);
+        messageListRecyclerview = findViewById(R.id.message_list_recyclerview);
+
+        initChatList();
+    }
+
+    /**
+     * 初始化聊天消息记录
+     */
+    private void initChatList() {
+        ArrayList<Integer> avatars = new ArrayList<>();
+        ArrayList<String> messages = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            avatars.add(R.mipmap.default_avatar);
+            avatars.add(R.mipmap.ic_launcher);
+            if (i % 2 == 1){
+                messages.add("这是我发的消息");
+            messages.add("这是他发的消息");}else {
+                messages.add("这是我发的很长很长很长很长很长很长很长的消息");
+                messages.add("这是他发的很长很长很长很长很长很长很长的消息");
+            }
+        }
+        ChatMessageAdapter adapter = new ChatMessageAdapter(avatars, messages);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        messageListRecyclerview.setHasFixedSize(true);
+        messageListRecyclerview.setLayoutManager(layoutManager);
+        messageListRecyclerview.setAdapter(adapter);
+        messageListRecyclerview.scrollToPosition(adapter.getItemCount() - 1);
     }
 
     @Override

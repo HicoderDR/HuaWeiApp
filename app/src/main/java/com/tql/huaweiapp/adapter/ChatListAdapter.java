@@ -1,4 +1,4 @@
-package com.tql.huaweiapp.view;
+package com.tql.huaweiapp.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,7 +41,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         return avatars.size();
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         onItemClickListener = listener;
     }
 
