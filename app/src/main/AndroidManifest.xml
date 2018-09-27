@@ -24,7 +24,7 @@
         <activity android:name=".activity.NewChatActivity" />
         <activity android:name=".activity.CharacterInfoActivity" />
         <activity android:name=".activity.ChatActivity" />
-        <activity android:name=".activity.CompleteUserInfoActivity"></activity>
+        <activity android:name=".activity.CompleteUserInfoActivity" />
     </application>
 
 </manifest>

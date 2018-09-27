@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
@@ -35,6 +36,10 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
      */
     private Button saveInfoButton;
     private ImageView mCloseImageview;
+    /**
+     * 让Ta更了解你吧
+     */
+    private TextView mHintTextview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +94,24 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
         saveInfoButton.setOnClickListener(this);
         mCloseImageview = findViewById(R.id.close_imageview);
         mCloseImageview.setOnClickListener(this);
+        mHintTextview = findViewById(R.id.hint_textview);
+
+        Intent intent = getIntent();
+        String type = intent.getStringExtra("type");
+        if (type.equals("0")){
+            setHint("告诉Ta更真实的自己");
+        }else {
+            setHint("让Ta更了解你吧");
+        }
+    }
+
+    /**
+     * 设置页面标头提示文字
+     *
+     * @param hint
+     */
+    public void setHint(String hint){
+        mHintTextview.setText(hint);
     }
 
     @Override

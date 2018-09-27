@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
-import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.adapter.ChatListAdapter;
+import com.tql.huaweiapp.utils.CommonUtils;
 
 import java.util.ArrayList;
 
@@ -43,6 +43,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayoutManager layoutManager;
     private ChatListAdapter chatListAdapter;
     private ChatListAdapter favoriteAdapter;
+    /**
+     * 注销
+     */
+    private TextView logOutTextview;
+    /**
+     * 退出
+     */
+    private TextView exitTextview;
+    /**
+     * 修改
+     */
+    private TextView reviseInfomationTextview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +91,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         themeCImageview.setOnClickListener(this);
 
 
+        logOutTextview = findViewById(R.id.log_out_textview);
+        logOutTextview.setOnClickListener(this);
+        exitTextview = findViewById(R.id.exit_textview);
+        exitTextview.setOnClickListener(this);
+        reviseInfomationTextview = findViewById(R.id.revise_infomation_textview);
+        reviseInfomationTextview.setOnClickListener(this);
     }
 
     /**
@@ -153,6 +171,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.theme_c_imageview:
                 CommonUtils.setTheme(this, CommonUtils.THEME_BLUE);
                 refreshTheme();
+                break;
+            case R.id.log_out_textview:
+                break;
+            case R.id.exit_textview:
+                break;
+            case R.id.revise_infomation_textview:
+                Intent intent = new Intent(MainActivity.this, CompleteUserInfoActivity.class);
+                intent.putExtra("type","0");
+                startActivity(intent);
                 break;
         }
     }

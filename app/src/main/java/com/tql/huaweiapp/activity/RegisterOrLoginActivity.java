@@ -109,7 +109,9 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                     public void onClick(View v) {
                         // TODO: 18-9-21 注册逻辑
 
-                        startActivity(new Intent(RegisterOrLoginActivity.this, CompleteUserInfoActivity.class));
+                        Intent intent = new Intent(RegisterOrLoginActivity.this, CompleteUserInfoActivity.class);
+                        intent.putExtra("type","1");
+                        startActivity(intent);
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
             @Override
