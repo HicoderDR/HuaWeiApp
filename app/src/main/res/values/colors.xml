@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--红色主题-->
-    <color name="red_primary">#9ad92c46</color>
-    <color name="red_primary_dark">#9ed12348</color>
+    <color name="red_primary">#d92c46</color>
+    <color name="red_primary_dark">#d12348</color>
     <color name="red_primary_light">#c5f4c5d5</color>
     <color name="red_background_color">#51fdb7b8</color>
-    <color name="red_accent">#67ff2130</color>
+    <color name="red_accent">#ff5662</color>
 
     <!--蓝色主题-->
     <color name="blue_primary">#6cbff9</color>
