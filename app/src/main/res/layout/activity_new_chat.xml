@@ -3,13 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="10"
     android:orientation="vertical"
     tools:context=".activity.NewChatActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="60dp"
         android:background="?attr/colorPrimary"
         android:elevation="10dp"
         android:orientation="horizontal"
@@ -41,10 +39,10 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/fictions" />
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@mipmap/fictions" />-->
         </LinearLayout>
 
         <LinearLayout
@@ -57,34 +55,34 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="2"-->
+        <!--android:orientation="horizontal">-->
 
-        <HorizontalScrollView
-            android:id="@+id/fictions_scrollview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<HorizontalScrollView-->
+            <!--android:id="@+id/fictions_scrollview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-            <LinearLayout
-                android:id="@+id/fictions_list_linearlayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/fictions_list_linearlayout"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:orientation="vertical">-->
 
-            </LinearLayout>
-        </HorizontalScrollView>
-    </LinearLayout>
+            <!--</LinearLayout>-->
+        <!--</HorizontalScrollView>-->
+    <!--</LinearLayout>-->
 
-    <LinearLayout
-        android:id="@+id/characters_list_linearlayout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/characters_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>

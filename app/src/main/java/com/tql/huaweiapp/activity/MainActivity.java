@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, ChatActivity.class));
             }
         });
-        otherChatListRecyclerview.setHasFixedSize(true);
+        otherChatListRecyclerview.setHasFixedSize(false);
         otherChatListRecyclerview.setLayoutManager(layoutManager);
         otherChatListRecyclerview.setAdapter(chatListAdapter);
     }

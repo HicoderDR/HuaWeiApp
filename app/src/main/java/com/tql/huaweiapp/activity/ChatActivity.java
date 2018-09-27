@@ -84,7 +84,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         }
         ChatMessageAdapter adapter = new ChatMessageAdapter(avatars, messages);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        messageListRecyclerview.setHasFixedSize(true);
+        messageListRecyclerview.setHasFixedSize(false);
         messageListRecyclerview.setLayoutManager(layoutManager);
         messageListRecyclerview.setAdapter(adapter);
         messageListRecyclerview.scrollToPosition(adapter.getItemCount() - 1);
