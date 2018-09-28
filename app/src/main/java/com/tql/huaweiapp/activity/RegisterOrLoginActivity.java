@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.utils.CommonUtils;
+import com.tql.huaweiapp.utils.ServerUtils;
 import com.tql.huaweiapp.view.AlertDialogIOS;
 
 public class RegisterOrLoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -97,6 +98,9 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
      * 注册
      */
     private void signUp() {
+//        getInputContent(1);
+//        if (!checkInputFormat(1)) return;
+
         // TODO: 2018/9/15 注册逻辑
         ProgressDialog waitingDialog = new ProgressDialog(this);
         waitingDialog.setIndeterminate(true);
@@ -119,9 +123,8 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                     @Override
                     public void onClick(View v) {
                         // TODO: 18-9-21 注册逻辑
-                        getInputContent();
-
-
+                        getInputContent(1);
+                        ServerUtils.addUser(email, password);
                         Intent intent = new Intent(RegisterOrLoginActivity.this, CompleteUserInfoActivity.class);
                         intent.putExtra("type", "1");
                         intent.putExtra("email", email);
@@ -136,10 +139,34 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
         }).show();
     }
 
-    private void getInputContent() {
+    /**
+     * 检查输入内容格式
+     *
+     * @param i
+     */
+    private boolean checkInputFormat(int i) {
+        if (email.isEmpty() || password.isEmpty()) {
+            toast("内容不能为空！");
+            return false;
+        } else if (email.matches("") || password.length() < 8) {
+            toast("邮箱账号或者密码不正确！");
+            return false;
+        } else if (i == 1) {
+            if (!password.equals(confirmPassword)) toast("两次密码输入不符！");
+            return false;
+        }
+        return true;
+    }
+
+    private void toast(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    private void getInputContent(int i) {
         email = emailEdittext.getText().toString();
         password = passwordEdittext.getText().toString();
-        confirmPassword = passwordConfirmEdittext.getText().toString();
+        if (i == 1)
+            confirmPassword = passwordConfirmEdittext.getText().toString();
     }
 
     /**
@@ -147,6 +174,9 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
      */
     private void signIn() {
         // TODO: 2018/9/15 登录逻辑
+        getInputContent(0);
+        if (!checkInputFormat(0)) return;
+
         startActivity(new Intent(RegisterOrLoginActivity.this, MainActivity.class));
     }
 }
