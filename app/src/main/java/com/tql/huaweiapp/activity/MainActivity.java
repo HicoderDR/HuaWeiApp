@@ -1,11 +1,13 @@
 package com.tql.huaweiapp.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_main);
+        CommonUtils.addActivity(this);
         initView();
     }
 
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setBackground();//侧栏头像设置高斯模糊背景
         slidePanel = findViewById(R.id.slide_panel);
         avatarImageview = findViewById(R.id.avatar_imageview);
+        avatarImageview.setOnClickListener(this);
         noFavoriteTextview = findViewById(R.id.no_favorite_textview);
         noRecordsTextview = findViewById(R.id.no_records_textview);
         slidePanel = findViewById(R.id.slide_panel);
@@ -174,12 +178,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 refreshTheme();
                 break;
             case R.id.log_out_textview:
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                builder1.setMessage("确定要注销账号吗？");
+                builder1.setPositiveButton("注销", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        CommonUtils.logout(MainActivity.this);
+                    }
+                });
+                builder1.create().show();
                 break;
             case R.id.exit_textview:
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+                builder2.setMessage("确定要退出吗？");
+                builder2.setPositiveButton("退出", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        CommonUtils.exitApplication();
+                    }
+                });
+                builder2.create().show();
                 break;
             case R.id.revise_infomation_textview:
                 Intent intent = new Intent(MainActivity.this, CompleteUserInfoActivity.class);
-                intent.putExtra("type","0");
+                intent.putExtra("type", "0");
                 startActivity(intent);
                 break;
         }

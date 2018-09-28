@@ -40,6 +40,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_chat);
+        CommonUtils.addActivity(this);
         initView();
     }
 

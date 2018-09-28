@@ -23,6 +23,7 @@ public class CharacterInfoActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_character_info);
+        CommonUtils.addActivity(this);
         initView();
     }
 
@@ -51,7 +52,7 @@ public class CharacterInfoActivity extends AppCompatActivity implements View.OnC
     }
 
     private void menuClickEvent(View v) {
-        PopupMenu pm = new PopupMenu(this,v);
+        PopupMenu pm = new PopupMenu(this, v);
         pm.inflate(R.menu.character_info_menu);
         pm.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override

@@ -58,6 +58,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_register_or_login);
+        CommonUtils.addActivity(this);
         initView();
 
     }
@@ -129,6 +130,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                                 waitingDialog.cancel();
                                 switch (msg.what) {
                                     case SUCCESSFUL:
+                                        CommonUtils.login(RegisterOrLoginActivity.this, email);
                                         Intent intent = new Intent(RegisterOrLoginActivity.this, CompleteUserInfoActivity.class);
                                         intent.putExtra("type", "1");
                                         intent.putExtra("email", email);
@@ -205,6 +207,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
         getInputContent(0);
         if (!checkInputFormat(0)) return;
 
+        CommonUtils.login(this, email);
         startActivity(new Intent(RegisterOrLoginActivity.this, MainActivity.class));
     }
 }

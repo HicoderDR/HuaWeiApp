@@ -27,6 +27,7 @@ public class NewChatActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_new_chat);
+        CommonUtils.addActivity(this);
         initView();
     }
 

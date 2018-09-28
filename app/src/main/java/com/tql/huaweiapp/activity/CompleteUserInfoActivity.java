@@ -55,6 +55,7 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_complete_user_info);
+        CommonUtils.addActivity(this);
         getBundle();
         initView();
 
