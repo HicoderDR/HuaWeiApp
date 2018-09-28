@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +35,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout voiceRecordLinearlayout;
     private LinearLayout record;
     private RecyclerView messageListRecyclerview;
+    private ArrayList<Integer> avatars;
+    private ArrayList<String> messages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,12 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         record = findViewById(R.id.record_linearlayout);
         record.setOnClickListener(this);
         record.setOnLongClickListener(this);
+        record.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
         messageListRecyclerview = findViewById(R.id.message_list_recyclerview);
 
         initChatList();
@@ -71,24 +80,25 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
      * 初始化聊天消息记录
      */
     private void initChatList() {
-        ArrayList<Integer> avatars = new ArrayList<>();
-        ArrayList<String> messages = new ArrayList<>();
+        avatars = new ArrayList<>();
+        messages = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             avatars.add(R.mipmap.default_avatar);
-            avatars.add(R.mipmap.ic_launcher);
-            if (i % 2 == 1){
+            avatars.add(R.mipmap.default_character_avatar);
+            if (i % 2 == 1) {
                 messages.add("这是我发的消息");
-            messages.add("这是他发的消息");}else {
+                messages.add("这是他发的消息");
+            } else {
                 messages.add("这是我发的很长很长很长很长很长很长很长的消息");
                 messages.add("这是他发的很长很长很长很长很长很长很长的消息");
             }
         }
-        ChatMessageAdapter adapter = new ChatMessageAdapter(avatars, messages);
+        ChatMessageAdapter chatMessageAdapter = new ChatMessageAdapter(avatars, messages);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         messageListRecyclerview.setHasFixedSize(false);
         messageListRecyclerview.setLayoutManager(layoutManager);
-        messageListRecyclerview.setAdapter(adapter);
-        messageListRecyclerview.scrollToPosition(adapter.getItemCount() - 1);
+        messageListRecyclerview.setAdapter(chatMessageAdapter);
+        messageListRecyclerview.scrollToPosition(chatMessageAdapter.getItemCount() - 1);
     }
 
     @Override
@@ -123,7 +133,19 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
      * 发送消息逻辑
      */
     private void sendMessage() {
+        String msg = messageEdittext.getText().toString();
+        if (msg.isEmpty()) toast("内容不能为空！");
+        else {
+            avatars.add(R.mipmap.default_avatar);
+            messages.add(msg);
+            messageListRecyclerview.setAdapter(new ChatMessageAdapter(avatars,messages));
+            messageListRecyclerview.scrollToPosition(avatars.size()-1);
+            messageEdittext.setText("");
+        }
+    }
 
+    private void toast(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
