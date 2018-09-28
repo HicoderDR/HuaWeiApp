@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayoutManager layoutManager;
     private ChatListAdapter chatListAdapter;
     private ChatListAdapter favoriteAdapter;
+
     /**
      * 注销
      */

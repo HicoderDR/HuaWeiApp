@@ -3,7 +3,6 @@ package com.tql.huaweiapp.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.utils.CommonUtils;
@@ -37,6 +37,15 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
      */
     private boolean buttonSelected = SIGN_IN;
 
+    /**
+     * 注册或者登录信息域
+     *
+     * @param savedInstanceState
+     */
+    private String email;
+    private String password;
+    private String confirmPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +71,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
             default:
                 break;
             case R.id.sign_in_button:
+                //登录
                 signInButton.setTextColor(Color.WHITE);
                 signInButton.setBackground(getResources().getDrawable(R.drawable.button_selected, getTheme()));
                 signUpButton.setBackground(getResources().getDrawable(R.drawable.button_unselected, getTheme()));
@@ -71,6 +81,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                 buttonSelected = SIGN_IN;
                 break;
             case R.id.sign_up_button:
+                //注册
                 signUpButton.setTextColor(Color.WHITE);
                 signUpButton.setBackground(getResources().getDrawable(R.drawable.button_selected, getTheme()));
                 signInButton.setBackground(getResources().getDrawable(R.drawable.button_unselected, getTheme()));
@@ -108,9 +119,13 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                     @Override
                     public void onClick(View v) {
                         // TODO: 18-9-21 注册逻辑
+                        getInputContent();
+
 
                         Intent intent = new Intent(RegisterOrLoginActivity.this, CompleteUserInfoActivity.class);
-                        intent.putExtra("type","1");
+                        intent.putExtra("type", "1");
+                        intent.putExtra("email", email);
+                        intent.putExtra("password", password);
                         startActivity(intent);
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
@@ -119,6 +134,12 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
 
             }
         }).show();
+    }
+
+    private void getInputContent() {
+        email = emailEdittext.getText().toString();
+        password = passwordEdittext.getText().toString();
+        confirmPassword = passwordConfirmEdittext.getText().toString();
     }
 
     /**

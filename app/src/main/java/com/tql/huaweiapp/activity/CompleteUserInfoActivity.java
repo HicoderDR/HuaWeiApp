@@ -41,14 +41,35 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
      */
     private TextView mHintTextview;
 
+    /**
+     * 注册或者登录信息域
+     *
+     * @param savedInstanceState
+     */
+    private String email;
+    private String password;
+    private String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_complete_user_info);
+        getBundle();
         initView();
 
         setBackground();
+    }
+
+    /**
+     * 获取intent数据
+     */
+    private void getBundle() {
+        Intent intent = getIntent();
+        type = intent.getStringExtra("type");
+        email = intent.getStringExtra("email");
+        if (type.equals("1"))
+            password = intent.getStringExtra("password");
     }
 
     /**
@@ -96,11 +117,9 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
         mCloseImageview.setOnClickListener(this);
         mHintTextview = findViewById(R.id.hint_textview);
 
-        Intent intent = getIntent();
-        String type = intent.getStringExtra("type");
-        if (type.equals("0")){
+        if (type.equals("0")) {
             setHint("告诉Ta更真实的自己");
-        }else {
+        } else {
             setHint("让Ta更了解你吧");
         }
     }
@@ -110,7 +129,7 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
      *
      * @param hint
      */
-    public void setHint(String hint){
+    public void setHint(String hint) {
         mHintTextview.setText(hint);
     }
 
