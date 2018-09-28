@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +19,9 @@ import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.utils.ServerUtils;
 import com.tql.huaweiapp.view.AlertDialogIOS;
+
+import static com.tql.huaweiapp.utils.ServerUtils.FAILED;
+import static com.tql.huaweiapp.utils.ServerUtils.SUCCESSFUL;
 
 public class RegisterOrLoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -102,16 +108,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
 //        if (!checkInputFormat(1)) return;
 
         // TODO: 2018/9/15 注册逻辑
-        ProgressDialog waitingDialog = new ProgressDialog(this);
-        waitingDialog.setIndeterminate(true);
-        waitingDialog.setMessage("发送验证码......");
-        waitingDialog.setCancelable(false);
-        waitingDialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
-        waitingDialog.show();
-        WindowManager.LayoutParams params = waitingDialog.getWindow().getAttributes();
-        params.width = 450;
-        params.gravity = Gravity.CENTER;
-        waitingDialog.getWindow().setAttributes(params);
+        ProgressDialog waitingDialog = getProgressDialog();
 
         waitingDialog.dismiss();
 
@@ -122,14 +119,30 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                 .setPositiveButton("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final ProgressDialog waitingDialog = getProgressDialog();
                         // TODO: 18-9-21 注册逻辑
                         getInputContent(1);
-                        ServerUtils.addUser(email, password);
-                        Intent intent = new Intent(RegisterOrLoginActivity.this, CompleteUserInfoActivity.class);
-                        intent.putExtra("type", "1");
-                        intent.putExtra("email", email);
-                        intent.putExtra("password", password);
-                        startActivity(intent);
+                        Handler handler = new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                waitingDialog.cancel();
+                                switch (msg.what) {
+                                    case SUCCESSFUL:
+                                        Intent intent = new Intent(RegisterOrLoginActivity.this, CompleteUserInfoActivity.class);
+                                        intent.putExtra("type", "1");
+                                        intent.putExtra("email", email);
+                                        intent.putExtra("password", password);
+                                        toast("注册成功！");
+                                        startActivity(intent);
+                                        break;
+                                    case FAILED:
+                                        toast("似乎出现了小差错，请重试！");
+                                        break;
+                                }
+                            }
+                        };
+                        ServerUtils.addUser(email, password, handler);
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
             @Override
@@ -137,6 +150,21 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
 
             }
         }).show();
+    }
+
+    @NonNull
+    private ProgressDialog getProgressDialog() {
+        ProgressDialog waitingDialog = new ProgressDialog(this);
+        waitingDialog.setIndeterminate(true);
+        waitingDialog.setMessage("发送验证码......");
+        waitingDialog.setCancelable(false);
+        waitingDialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
+        waitingDialog.show();
+        WindowManager.LayoutParams params = waitingDialog.getWindow().getAttributes();
+        params.width = 450;
+        params.gravity = Gravity.CENTER;
+        waitingDialog.getWindow().setAttributes(params);
+        return waitingDialog;
     }
 
     /**

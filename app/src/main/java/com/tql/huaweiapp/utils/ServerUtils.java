@@ -1,5 +1,7 @@
 package com.tql.huaweiapp.utils;
 
+import android.os.Handler;
+
 import com.alibaba.fastjson.JSON;
 import com.tql.huaweiapp.entry.User;
 
@@ -18,12 +20,20 @@ public class ServerUtils {
     private static final String REST_API = "http://39.108.180.185:8080";
     private static final String GET_VERIFICATION_CODE = REST_API.concat("/get-verification-code");
     private static final String ADD_USER = REST_API.concat("/add-user");
+    public static final int SUCCESSFUL = 0;
+    public static final int FAILED = 1;
 
-    public static void getVerificationCode(String email) {
+    public static void getVerificationCode(String email,Handler handler) {
 
     }
 
-    public static void addUser(String email, String password) {
+    /**
+     * 用户注册，添加一个新的用户到数据库
+     *
+     * @param email
+     * @param password
+     */
+    public static void addUser(String email, String password, final Handler handler) {
         User user = new User();
         user.setMail(email);
         user.setPassword(password);
@@ -37,12 +47,14 @@ public class ServerUtils {
             public void onFailure(Call call, IOException e) {
                 System.out.println("Fail");
                 e.printStackTrace();
+                handler.sendEmptyMessage(FAILED);
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 System.out.println("Connection Successful");
                 System.out.println(response.toString());
+                handler.sendEmptyMessage(SUCCESSFUL);
             }
         });
     }
