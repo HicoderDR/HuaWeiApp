@@ -209,5 +209,6 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
 
         CommonUtils.login(this, email);
         startActivity(new Intent(RegisterOrLoginActivity.this, MainActivity.class));
+        finish();
     }
 }
