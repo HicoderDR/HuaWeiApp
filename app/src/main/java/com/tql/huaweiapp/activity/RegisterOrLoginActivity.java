@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.jkb.vcedittext.VerificationCodeEditText;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.utils.ServerUtils;
@@ -52,6 +53,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
     private String email;
     private String password;
     private String confirmPassword;
+    private String verificationCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,15 +107,13 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
      * 注册
      */
     private void signUp() {
-//        getInputContent(1);
+        getInputContent(1);
 //        if (!checkInputFormat(1)) return;
 
         // TODO: 2018/9/15 注册逻辑
-        ProgressDialog waitingDialog = getProgressDialog();
+        final ProgressDialog waitingDialog = getProgressDialog();
 
-        waitingDialog.dismiss();
-
-        new AlertDialogIOS(this).builder()
+        final AlertDialogIOS alertDialogIOS = new AlertDialogIOS(this).builder()
                 .setCancelable(false)
                 .setTitle("邮箱验证码")
                 .setMsg("请填写你收到的六位验证码：")
@@ -123,6 +123,11 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                         final ProgressDialog waitingDialog = getProgressDialog();
                         // TODO: 18-9-21 注册逻辑
                         getInputContent(1);
+                        if (AlertDialogIOS.verificationCode.equals(verificationCode)){
+                            toast("验证码错误！");
+                            return;
+                        }
+
                         Handler handler = new Handler() {
                             @Override
                             public void handleMessage(Message msg) {
@@ -147,11 +152,26 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                         ServerUtils.addUser(email, password, handler);
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    @Override
+                    public void onClick(View v) {
 
+                    }
+                });
+
+        ServerUtils.getVerificationCode(email, new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                waitingDialog.dismiss();
+                if (msg.what == ServerUtils.FAILED)
+                    toast("验证码发送失败，请重试！");
+                else {
+                    verificationCode = msg.obj.toString();
+                    toast("验证码发送成功！");
+                    alertDialogIOS.show();
+                }
             }
-        }).show();
+        });
     }
 
     @NonNull

@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.jkb.vcedittext.VerificationCodeEditText;
 import com.tql.huaweiapp.R;
 
 
@@ -31,17 +32,18 @@ public class AlertDialogIOS {
     private boolean showMsg = false;
     private boolean showPosBtn = false;
     private boolean showNegBtn = false;
+    private View view;
+    public static String verificationCode;
 
     public AlertDialogIOS(Context context) {
         this.context = context;
-        WindowManager windowManager = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         display = windowManager.getDefaultDisplay();
     }
 
     public AlertDialogIOS builder() {
         // 获取Dialog布局
-        View view = LayoutInflater.from(context).inflate(
+        view = LayoutInflater.from(context).inflate(
                 R.layout.view_alertdialog, null);
 
         // 获取自定义Dialog布局中的控件
@@ -104,6 +106,7 @@ public class AlertDialogIOS {
         btn_pos.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                verificationCode = ((VerificationCodeEditText) view.findViewById(R.id.verification_code_edittext)).getText().toString();
                 listener.onClick(v);
                 dialog.dismiss();
             }
