@@ -23,9 +23,16 @@ public class ServerUtils {
     private static final String GET_VERIFICATION_CODE = REST_API.concat("/get-verification-code");
     private static final String ADD_USER = REST_API.concat("/add-user");
     private static final String USER_LOGIN = REST_API.concat("/user-login");
+    private static final String SET_USER = REST_API.concat("/set-user-info");
     public static final int SUCCESSFUL = 0;
     public static final int FAILED = 1;
 
+    /**
+     * 获取注册验证码
+     *
+     * @param email
+     * @param handler
+     */
     public static void getVerificationCode(String email, final Handler handler) {
         OkHttpClient client = new OkHttpClient();
         final Request request = new Request.Builder().url(GET_VERIFICATION_CODE + "?mail=" + email).get().build();
@@ -93,7 +100,7 @@ public class ServerUtils {
                     Message msg = new Message();
                     msg.what = SUCCESSFUL;
                     handler.sendMessage(msg);
-                } else if (object.getString("message").equals("添加失败，该邮箱已被注册过")){
+                } else if (object.getString("message").equals("添加失败，该邮箱已被注册过")) {
                     Message msg = new Message();
                     msg.what = FAILED;
                     msg.obj = "添加失败，该邮箱已被注册过";
@@ -141,6 +148,47 @@ public class ServerUtils {
                 } else {
                     Message msg = new Message();
                     msg.what = SUCCESSFUL;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
+    }
+
+    /**
+     * 更新用户资料
+     *
+     * @param user
+     * @param handler
+     */
+    public static void updateUserInfo(User user, final Handler handler) {
+        String userJson = JSON.toJSONString(user);
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = FormBody.create(MediaType.parse("application/json"), userJson);
+        final Request request = new Request.Builder().url(SET_USER).post(body).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("Fail");
+                e.printStackTrace();
+                Message msg = new Message();
+                msg.what = FAILED;
+                handler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("Connection Successful");
+                String data = response.body().string();
+                System.out.println(data);
+                JSONObject object = JSON.parseObject(data);
+                if (object.getString("hr").equals("200")) {
+                    Message msg = new Message();
+                    msg.what = SUCCESSFUL;
+                    handler.sendMessage(msg);
+                } else {
+                    Message msg = new Message();
+                    msg.what = FAILED;
                     handler.sendMessage(msg);
                 }
             }

@@ -1,22 +1,30 @@
 package com.tql.huaweiapp.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.constant.Hobby;
+import com.tql.huaweiapp.entry.User;
 import com.tql.huaweiapp.utils.CommonUtils;
+import com.tql.huaweiapp.utils.ServerUtils;
 import com.tql.huaweiapp.view.ActionSheetIOS;
 import com.tql.huaweiapp.view.TagDialog;
 import com.tql.huaweiapp.view.WrapLayout;
@@ -49,6 +57,7 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
     private String email;
     private String password;
     private String type;
+    private ProgressDialog waitinDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,7 +202,32 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
                         .setCancelable(false).show();
                 break;
             case R.id.save_info_button:
-                saveInfo();
+                waitinDialog = getProgressDialog("正在保存...");
+                User user = new User();
+                user.setMail(CommonUtils.getCurrentUserEmail(this));
+                if (!ageEdittext.getText().toString().isEmpty())
+                    user.setAge(Integer.parseInt(ageEdittext.getText().toString()));
+                Date birthday = new Date();
+                String[] date = birthdayEdittext.getText().toString().split("-");
+                if (date.length == 3) {
+                    birthday.setYear(Integer.parseInt(date[0]));
+                    birthday.setMonth(Integer.parseInt(date[1]) - 1);
+                    birthday.setDate(Integer.parseInt(date[2]));
+                    user.setBirthday(birthday);
+                }
+                switch (gendetEdittext.getText().toString()) {
+                    case "男":
+                        user.setGender(0);
+                        break;
+                    case "女":
+                        user.setGender(1);
+                        break;
+                    default:
+                        user.setGender(2);
+                        break;
+                }
+                user.setNickName(nicknameEdittext.getText().toString());
+                saveInfo(user);
                 break;
             case R.id.close_imageview:
                 startActivity(new Intent(CompleteUserInfoActivity.this, MainActivity.class));
@@ -240,10 +274,27 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
     /**
      * 保存用户信息
      */
-    private void saveInfo() {
+    private void saveInfo(User user) {
         // TODO: 18-9-21
-        startActivity(new Intent(CompleteUserInfoActivity.this, MainActivity.class));
-        this.finish();
+        ServerUtils.updateUserInfo(user, new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                waitinDialog.dismiss();
+                if (msg.what == ServerUtils.SUCCESSFUL) {
+                    startActivity(new Intent(CompleteUserInfoActivity.this, MainActivity.class));
+                    CompleteUserInfoActivity.this.finish();
+                    toast("修改成功！");
+                } else {
+                    toast("修改失败，请重试！");
+                }
+            }
+        });
+
+    }
+
+    private void toast(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -256,6 +307,20 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
         //"YYYY-MM-DD HH:MM:SS"        "yyyy-MM-dd"
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
+    }
+
+    private ProgressDialog getProgressDialog(String s) {
+        ProgressDialog waitingDialog = new ProgressDialog(this);
+        waitingDialog.setIndeterminate(true);
+        waitingDialog.setMessage(s);
+        waitingDialog.setCancelable(false);
+        waitingDialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
+        waitingDialog.show();
+        WindowManager.LayoutParams params = waitingDialog.getWindow().getAttributes();
+        params.width = 450;
+        params.gravity = Gravity.CENTER;
+        waitingDialog.getWindow().setAttributes(params);
+        return waitingDialog;
     }
 
 }
