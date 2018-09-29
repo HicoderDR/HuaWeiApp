@@ -2,6 +2,7 @@ package com.tql.huaweiapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +17,12 @@ import android.widget.Toast;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.adapter.ChatMessageAdapter;
 import com.tql.huaweiapp.utils.CommonUtils;
+import com.tql.huaweiapp.utils.GetAnswer;
 
 import java.util.ArrayList;
+
+import static com.tql.huaweiapp.utils.GetAnswer.GetAnswers;
+import static com.tql.huaweiapp.utils.GetAnswer.PrettyPrint;
 
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
@@ -43,6 +48,13 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_chat);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+
         CommonUtils.addActivity(this);
         initView();
     }
@@ -138,6 +150,15 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         else {
             avatars.add(R.mipmap.default_avatar);
             messages.add(msg);
+            try {
+                String response = GetAnswers ("你好");
+                avatars.add(R.mipmap.default_character_avatar);
+                messages.add(PrettyPrint(response));
+            }
+            catch (Exception e) {
+                System.out.println (e);
+            }
+
             messageListRecyclerview.setAdapter(new ChatMessageAdapter(avatars,messages));
             messageListRecyclerview.scrollToPosition(avatars.size()-1);
             messageEdittext.setText("");

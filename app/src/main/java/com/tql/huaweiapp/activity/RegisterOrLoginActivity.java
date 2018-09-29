@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.jkb.vcedittext.VerificationCodeEditText;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.utils.ServerUtils;
@@ -111,7 +110,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
 //        if (!checkInputFormat(1)) return;
 
         // TODO: 2018/9/15 注册逻辑
-        final ProgressDialog waitingDialog = getProgressDialog();
+        final ProgressDialog waitingDialog = getProgressDialog("正在发送验证码...");
 
         final AlertDialogIOS alertDialogIOS = new AlertDialogIOS(this).builder()
                 .setCancelable(false)
@@ -120,11 +119,12 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                 .setPositiveButton("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final ProgressDialog waitingDialog = getProgressDialog();
+                        final ProgressDialog waitingDialog = getProgressDialog("正在注册...");
                         // TODO: 18-9-21 注册逻辑
                         getInputContent(1);
-                        if (AlertDialogIOS.verificationCode.equals(verificationCode)){
+                        if (!AlertDialogIOS.verificationCode.equals(verificationCode)){
                             toast("验证码错误！");
+                            waitingDialog.dismiss();
                             return;
                         }
 
@@ -132,7 +132,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                             @Override
                             public void handleMessage(Message msg) {
                                 super.handleMessage(msg);
-                                waitingDialog.cancel();
+                                waitingDialog.dismiss();
                                 switch (msg.what) {
                                     case SUCCESSFUL:
                                         CommonUtils.login(RegisterOrLoginActivity.this, email);
@@ -144,7 +144,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
                                         startActivity(intent);
                                         break;
                                     case FAILED:
-                                        toast("似乎出现了小差错，请重试！");
+                                        toast(msg.obj.toString());
                                         break;
                                 }
                             }
@@ -175,10 +175,10 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
     }
 
     @NonNull
-    private ProgressDialog getProgressDialog() {
+    private ProgressDialog getProgressDialog(String s) {
         ProgressDialog waitingDialog = new ProgressDialog(this);
         waitingDialog.setIndeterminate(true);
-        waitingDialog.setMessage("发送验证码......");
+        waitingDialog.setMessage(s);
         waitingDialog.setCancelable(false);
         waitingDialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
         waitingDialog.show();
@@ -227,8 +227,22 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
         getInputContent(0);
         if (!checkInputFormat(0)) return;
 
-        CommonUtils.login(this, email);
-        startActivity(new Intent(RegisterOrLoginActivity.this, MainActivity.class));
-        finish();
+        final ProgressDialog dialog = getProgressDialog("正在登录...");
+
+        ServerUtils.login(email,password,new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                dialog.dismiss();
+                if (msg.what == ServerUtils.FAILED){
+                    toast("登录失败！");
+                }else {
+                    toast("登录成功！");
+                    CommonUtils.login(RegisterOrLoginActivity.this, email);
+                    startActivity(new Intent(RegisterOrLoginActivity.this, MainActivity.class));
+                    finish();
+                }
+            }
+        });
     }
 }
