@@ -3,14 +3,18 @@ package com.tql.huaweiapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -125,7 +129,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.character_info_imageview:
-                startActivity(new Intent(ChatActivity.this, CharacterInfoActivity.class));
+//                startActivity(new Intent(ChatActivity.this, CharacterInfoActivity.class));
+                menuClickEvent(v);
                 break;
             case R.id.micro_phone_imageview:
                 voiceRecordLinearlayout.setVisibility(View.VISIBLE);
@@ -180,7 +185,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private String getAnswer(String s) {
         JSONObject data = JSON.parseObject(JSON.parseObject(s).getJSONArray("answers").getString(0));
         System.out.println(data);
-        System.out.println("+++++++++"+data.getString("answer"));
+        System.out.println("+++++++++" + data.getString("answer"));
         return data.getString("answer").trim();//去掉前后空格和换行
     }
 
@@ -199,5 +204,34 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         return true;
+    }
+
+    /**
+     * 弹出菜单
+     *
+     * @param v
+     */
+    private void menuClickEvent(final View v) {
+        PopupMenu pm = new PopupMenu(this, v);
+        pm.inflate(R.menu.character_info_menu);
+        pm.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                // TODO: 2018/9/17 添加“喜欢”逻辑
+                switch (menuItem.getItemId()) {
+                    case R.id.introduction:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                        View view = LayoutInflater.from(ChatActivity.this).inflate(R.layout.character_profile_card, null);
+                        builder.setView(view);
+                        builder.create().show();
+                        break;
+                    case R.id.favorite:
+
+                        break;
+                }
+                return true;
+            }
+        });
+        pm.show();
     }
 }

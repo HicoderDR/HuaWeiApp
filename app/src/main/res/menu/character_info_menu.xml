@@ -2,5 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/favorite"
-        android:title="收藏" />
+        android:title="收藏Ta" />
+    <item
+        android:id="@+id/introduction"
+        android:title="关于Ta" />
+
 </menu>

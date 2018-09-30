@@ -57,7 +57,7 @@ public class NewChatActivity extends AppCompatActivity implements View.OnClickLi
         adapter.setOnItemClickListener(new CharacterListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                startActivity(new Intent(NewChatActivity.this, CharacterInfoActivity.class));
+                startActivity(new Intent(NewChatActivity.this, ChatActivity.class));
             }
         });
         charactersListRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

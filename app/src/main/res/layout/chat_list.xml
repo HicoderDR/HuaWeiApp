@@ -59,11 +59,13 @@
                 <!--app:srcCompat="@mipmap/default_avatar" />-->
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/avatar_imageview"
+                android:id="@+id/avatar_main_imageview"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/default_avatar"
                 android:transitionName="avatar"

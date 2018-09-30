@@ -34,7 +34,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView avatarImageview;
+    private ImageView avatar_main_Imageview;
+    private ImageView avatar_Imageview;
     private ImageView avatarBackgroundImageview;
     private SlidingPaneLayout slidePanel;
     /**
@@ -88,13 +89,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-        avatarImageview = findViewById(R.id.avatar_imageview);
-        avatarImageview.setOnClickListener(this);
+        avatar_Imageview = findViewById(R.id.avatar_imageview);
+        avatar_Imageview.setOnClickListener(this);
         avatarBackgroundImageview = findViewById(R.id.avatar_background_imageview);
         setBackground();//侧栏头像设置高斯模糊背景
         slidePanel = findViewById(R.id.slide_panel);
-        avatarImageview = findViewById(R.id.avatar_imageview);
-        avatarImageview.setOnClickListener(this);
+        avatar_main_Imageview = findViewById(R.id.avatar_main_imageview);
+        avatar_main_Imageview.setOnClickListener(this);
         noFavoriteTextview = findViewById(R.id.no_favorite_textview);
         noRecordsTextview = findViewById(R.id.no_records_textview);
         slidePanel = findViewById(R.id.slide_panel);
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             default:
                 break;
-            case R.id.avatar_imageview:
+            case R.id.avatar_main_imageview:
                 slidePanel.openPane();
                 break;
             case R.id.new_chat_actionbutton:
