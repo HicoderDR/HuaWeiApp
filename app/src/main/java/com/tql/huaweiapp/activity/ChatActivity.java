@@ -181,7 +181,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         JSONObject data = JSON.parseObject(JSON.parseObject(s).getJSONArray("answers").getString(0));
         System.out.println(data);
         System.out.println("+++++++++"+data.getString("answer"));
-        return data.getString("answer");
+        return data.getString("answer").trim();//去掉前后空格和换行
     }
 
     private void toast(String s) {
