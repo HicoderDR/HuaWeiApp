@@ -23,6 +23,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.adapter.ChatListAdapter;
+import com.tql.huaweiapp.constant.Gender;
 import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.utils.ServerUtils;
 
@@ -263,12 +264,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (msg.what == ServerUtils.FAILED) {
                     toast("用户资料加载失败！");
                 } else {
-                    JSONObject object = (JSONObject) msg.obj;
+                    JSONObject object = JSONObject.parseObject(msg.obj.toString());
                     mNicknameTextview.setText(object.getString("nickName"));
                     mAgeTextview.setText(object.getString("age"));
-                    mBirthdayTextview.setText(object.getString("birthday"));
-                    mGenderTextview.setText(object.getString("gender"));
+                    mBirthdayTextview.setText(object.getString("birthday").split("T")[0]);
+                    mGenderTextview.setText(Gender.GENDERS[Integer.parseInt(object.getString("gender"))]);
                     mTagsTextview.setText(object.getString("hobby"));
+                    mTagsTextview.setText(object.getString("hobby"));
+                    System.out.println(object.toJSONString());
                 }
             }
         });

@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.pickerview.TimePickerView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
+import com.tql.huaweiapp.constant.Gender;
 import com.tql.huaweiapp.constant.Hobby;
 import com.tql.huaweiapp.entry.User;
 import com.tql.huaweiapp.utils.CommonUtils;
@@ -122,11 +123,11 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
                 if (msg.what == ServerUtils.FAILED) {
                     toast("用户资料加载失败！");
                 } else {
-                    JSONObject object = (JSONObject) msg.obj;
+                    JSONObject object = JSONObject.parseObject(msg.obj.toString());
                     nicknameEdittext.setText(object.getString("nickName"));
                     ageEdittext.setText(object.getString("age"));
-                    birthdayEdittext.setText(object.getString("birthday"));
-                    gendetEdittext.setText(object.getString("gender"));
+                    birthdayEdittext.setText(object.getString("birthday").split("T")[0]);
+                    gendetEdittext.setText(Gender.GENDERS[Integer.parseInt(object.getString("gender"))]);
                     tagEdittext.setText(object.getString("hobby"));
                 }
             }
@@ -235,7 +236,7 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
                 Date birthday = new Date();
                 String[] date = birthdayEdittext.getText().toString().split("-");
                 if (date.length == 3) {
-                    birthday.setYear(Integer.parseInt(date[0])-1900);
+                    birthday.setYear(Integer.parseInt(date[0]) - 1900);
                     birthday.setMonth(Integer.parseInt(date[1]) - 1);
                     birthday.setDate(Integer.parseInt(date[2]));
                     user.setBirthday(birthday);
