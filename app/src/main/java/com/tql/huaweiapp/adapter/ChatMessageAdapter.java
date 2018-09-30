@@ -17,17 +17,18 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
     public static final int YOUR_MESSAGE = 0;
     private ArrayList<Integer> avatars;
     private ArrayList<String> messages;
+    private ArrayList<Integer> from;
 
-    public ChatMessageAdapter(ArrayList<Integer> avatars, ArrayList<String> messages) {
+    public ChatMessageAdapter(ArrayList<Integer> avatars, ArrayList<String> messages, ArrayList<Integer> from) {
         this.avatars = avatars;
         this.messages = messages;
+        this.from = from;
     }
 
     @Override
     public int getItemViewType(int position) {
         //假设前提是，用户发一条消息，服务器端必然返回一条消息，即用户的消息在所有为0,2，...，2n的Item位置
-        if ((position & 1) == 0) return MY_MESSAGE;
-        else return YOUR_MESSAGE;
+        return from.get(position);
     }
 
     @NonNull

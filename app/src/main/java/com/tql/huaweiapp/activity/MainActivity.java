@@ -1,5 +1,6 @@
 package com.tql.huaweiapp.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,7 +14,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mAgeTextview;
     private TextView mTagsTextview;
     private TextView mNicknameTextview;
+    /**
+     * 检查更新
+     */
+    private TextView checkUpdateTextview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initUserInfo();
         initChatList();
         initFavoriteList();
+        checkUpdateTextview = (TextView) findViewById(R.id.check_update_textview);
+        checkUpdateTextview.setOnClickListener(this);
     }
 
     /**
@@ -226,7 +235,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("type", "0");
                 startActivity(intent);
                 break;
+            case R.id.check_update_textview:
+                final ProgressDialog dialog = getProgressDialog("正在检测更新...");
+                ServerUtils.checkUpdate(new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        dialog.dismiss();
+                        if (msg.what == ServerUtils.FAILED){
+                            toast("检查失败，请重试！");
+                        }else {
+                            if (msg.equals("1.0"))toast("当前已经是最新版本");
+                            else toast("有新版本！");
+                        }
+                    }
+                });
+                break;
         }
+    }
+
+    private ProgressDialog getProgressDialog(String s) {
+        ProgressDialog waitingDialog = new ProgressDialog(this);
+        waitingDialog.setIndeterminate(true);
+        waitingDialog.setMessage(s);
+        waitingDialog.setCancelable(false);
+        waitingDialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
+        waitingDialog.show();
+        WindowManager.LayoutParams params = waitingDialog.getWindow().getAttributes();
+        params.width = 450;
+        params.gravity = Gravity.CENTER;
+        waitingDialog.getWindow().setAttributes(params);
+        return waitingDialog;
     }
 
     //修改主题后刷新页面

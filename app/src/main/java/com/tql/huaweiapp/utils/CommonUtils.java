@@ -6,11 +6,19 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import com.tql.huaweiapp.R;
-import com.tql.huaweiapp.activity.MainActivity;
 import com.tql.huaweiapp.activity.RegisterOrLoginActivity;
-import com.tql.huaweiapp.entry.User;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommonUtils {
     private static final String THEME_ID = "theme_id";
@@ -98,5 +106,52 @@ public class CommonUtils {
             activity.finish();
         }
         System.exit(0);
+    }
+
+    public static void saveMessageToLocal(Context context, int from, String message, String bot_id) {
+        String path = context.getFilesDir().getAbsolutePath() + File.separator + "messages" + File.separator;
+        if (!new File(path).exists()) new File(path).mkdirs();
+        System.out.println(path);
+        path = path + getCurrentUserEmail(context).split("@")[0] + "_" + bot_id;
+        System.out.println(path);
+        try {
+            File file = new File(path);
+            if (!file.exists()) file.createNewFile();
+            BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,true)));
+            br.write(from + "::" + message + "\n");
+            br.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * 获取聊天记录
+     *
+     * @param context
+     * @return
+     */
+    public static ArrayList<String> getMessagesFromLocal(Context context, String bot_id) {
+        String path = context.getFilesDir().getAbsolutePath() + File.separator + "messages" + File.separator;
+        if (!new File(path).exists()) new File(path).mkdirs();
+        System.out.println(path);
+        path = path + getCurrentUserEmail(context).split("@")[0] + "_" + bot_id;
+        System.out.println(path);
+        ArrayList<String> messages = new ArrayList<>();
+        try {
+            File file = new File(path);
+            if (!file.exists()) return messages;
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                messages.add(line);
+//                messages.put(Integer.valueOf(line.split("::")[0]),line.split("::")[1]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return messages;
     }
 }

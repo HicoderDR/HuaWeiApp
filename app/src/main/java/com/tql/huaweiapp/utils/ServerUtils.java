@@ -25,6 +25,8 @@ public class ServerUtils {
     private static final String USER_LOGIN = REST_API.concat("/user-login");
     private static final String SET_USER = REST_API.concat("/set-user-info");
     private static final String GET_USER_INFO = REST_API.concat("/get-user-by-mail");
+    private static final String CHECK_UPDATE = REST_API.concat("/check-update");
+    private static final String GET_BOT_INTRODUCTION = REST_API.concat("/get-introduction");
     public static final int SUCCESSFUL = 0;
     public static final int FAILED = 1;
 
@@ -232,5 +234,47 @@ public class ServerUtils {
                 }
             }
         });
+    }
+
+    /**
+     * 检查更新
+     */
+    public static void checkUpdate(final Handler handler){
+        OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder().url(CHECK_UPDATE).get().build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("Fail");
+                e.printStackTrace();
+                handler.sendEmptyMessage(FAILED);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("Connection Successful");
+                String data = response.body().string();
+                System.out.println(data);
+                JSONObject object = JSON.parseObject(data);
+                if (object.getString("hr").equals("200")) {
+                    Message msg = new Message();
+                    msg.what = SUCCESSFUL;
+                    msg.obj = object.getString("message");
+                    handler.sendMessage(msg);
+                } else {
+                    Message msg = new Message();
+                    msg.what = FAILED;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取人物简介
+     */
+    public static void getCharacterInfo(final Handler handler){
+
     }
 }

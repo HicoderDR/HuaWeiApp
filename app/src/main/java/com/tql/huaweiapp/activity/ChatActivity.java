@@ -14,10 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.adapter.ChatMessageAdapter;
 import com.tql.huaweiapp.utils.CommonUtils;
-import com.tql.huaweiapp.utils.GetAnswer;
 
 import java.util.ArrayList;
 
@@ -41,6 +42,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout record;
     private RecyclerView messageListRecyclerview;
     private ArrayList<Integer> avatars;
+    private ArrayList<Integer> from;
     private ArrayList<String> messages;
 
     @Override
@@ -94,18 +96,18 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void initChatList() {
         avatars = new ArrayList<>();
         messages = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            avatars.add(R.mipmap.default_avatar);
-            avatars.add(R.mipmap.default_character_avatar);
-            if (i % 2 == 1) {
-                messages.add("这是我发的消息");
-                messages.add("这是他发的消息");
+        from = new ArrayList<>();
+        for (String line : CommonUtils.getMessagesFromLocal(this, "1")) {
+            if (Integer.valueOf(line.split("::")[0]).equals(ChatMessageAdapter.MY_MESSAGE)) {
+                from.add(ChatMessageAdapter.MY_MESSAGE);
+                avatars.add(R.mipmap.default_avatar);
             } else {
-                messages.add("这是我发的很长很长很长很长很长很长很长的消息");
-                messages.add("这是他发的很长很长很长很长很长很长很长的消息");
+                from.add(ChatMessageAdapter.YOUR_MESSAGE);
+                avatars.add(R.mipmap.default_character_avatar);
             }
+            messages.add(line.split("::")[1]);
         }
-        ChatMessageAdapter chatMessageAdapter = new ChatMessageAdapter(avatars, messages);
+        ChatMessageAdapter chatMessageAdapter = new ChatMessageAdapter(avatars, messages, from);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         messageListRecyclerview.setHasFixedSize(false);
         messageListRecyclerview.setLayoutManager(layoutManager);
@@ -150,19 +152,36 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         else {
             avatars.add(R.mipmap.default_avatar);
             messages.add(msg);
+            from.add(ChatMessageAdapter.MY_MESSAGE);
+            CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.MY_MESSAGE, msg, "1");
             try {
-                String response = GetAnswers ("你好");
+                String response = GetAnswers(msg);
                 avatars.add(R.mipmap.default_character_avatar);
-                messages.add(PrettyPrint(response));
-            }
-            catch (Exception e) {
-                System.out.println (e);
+                String answer = getAnswer(PrettyPrint(response));
+                messages.add(answer);
+                from.add(ChatMessageAdapter.YOUR_MESSAGE);
+                CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.YOUR_MESSAGE, answer, "1");
+            } catch (Exception e) {
+                System.out.println(e);
             }
 
-            messageListRecyclerview.setAdapter(new ChatMessageAdapter(avatars,messages));
-            messageListRecyclerview.scrollToPosition(avatars.size()-1);
+            messageListRecyclerview.setAdapter(new ChatMessageAdapter(avatars, messages, from));
+            messageListRecyclerview.scrollToPosition(avatars.size() - 1);
             messageEdittext.setText("");
         }
+    }
+
+    /**
+     * 获取回答
+     *
+     * @param s
+     * @return
+     */
+    private String getAnswer(String s) {
+        JSONObject data = JSON.parseObject(JSON.parseObject(s).getJSONArray("answers").getString(0));
+        System.out.println(data);
+        System.out.println("+++++++++"+data.getString("answer"));
+        return data.getString("answer");
     }
 
     private void toast(String s) {
