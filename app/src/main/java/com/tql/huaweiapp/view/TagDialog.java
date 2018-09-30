@@ -190,7 +190,7 @@ public class TagDialog {
         tagLayout.setData(Hobby.HOBBIES,context,16);
     }
 
-    public TagDialog initTag(String s) {
+    public TagDialog setSelectedTag(String s) {
         tagLayout.initTag(s);
         return this;
     }

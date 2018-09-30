@@ -198,7 +198,7 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
 
                             }
                         })
-                        .initTag(tagEdittext.getText().toString())
+                        .setSelectedTag(tagEdittext.getText().toString())
                         .setCancelable(false).show();
                 break;
             case R.id.save_info_button:
@@ -210,7 +210,7 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
                 Date birthday = new Date();
                 String[] date = birthdayEdittext.getText().toString().split("-");
                 if (date.length == 3) {
-                    birthday.setYear(Integer.parseInt(date[0]));
+                    birthday.setYear(Integer.parseInt(date[0])-1900);
                     birthday.setMonth(Integer.parseInt(date[1]) - 1);
                     birthday.setDate(Integer.parseInt(date[2]));
                     user.setBirthday(birthday);
@@ -227,6 +227,7 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
                         break;
                 }
                 user.setNickName(nicknameEdittext.getText().toString());
+                user.setHobby(tagEdittext.getText().toString());
                 saveInfo(user);
                 break;
             case R.id.close_imageview:
