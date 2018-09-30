@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.pickerview.TimePickerView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
@@ -110,6 +111,28 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
 
     }
 
+    /**
+     * 初始化用户资料
+     */
+    private void initUserInfo() {
+        ServerUtils.getUsetInfo(CommonUtils.getCurrentUserEmail(this), new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == ServerUtils.FAILED) {
+                    toast("用户资料加载失败！");
+                } else {
+                    JSONObject object = (JSONObject) msg.obj;
+                    nicknameEdittext.setText(object.getString("nickName"));
+                    ageEdittext.setText(object.getString("age"));
+                    birthdayEdittext.setText(object.getString("birthday"));
+                    gendetEdittext.setText(object.getString("gender"));
+                    tagEdittext.setText(object.getString("hobby"));
+                }
+            }
+        });
+    }
+
     private void initView() {
         completeInfoBgImageview = findViewById(R.id.complete_info_bg_imageview);
         nicknameEdittext = findViewById(R.id.nickname_edittext);
@@ -132,6 +155,8 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
         } else {
             setHint("让Ta更了解你吧");
         }
+
+        initUserInfo();
     }
 
     /**

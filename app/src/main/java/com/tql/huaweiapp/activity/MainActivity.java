@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AlertDialog;
@@ -14,12 +16,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.adapter.ChatListAdapter;
 import com.tql.huaweiapp.utils.CommonUtils;
+import com.tql.huaweiapp.utils.ServerUtils;
 
 import java.util.ArrayList;
 
@@ -59,6 +64,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private TextView reviseInfomationTextview;
 
+    private TextView mGenderTextview;
+    private TextView mBirthdayTextview;
+    private TextView mAgeTextview;
+    private TextView mTagsTextview;
+    private TextView mNicknameTextview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,9 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         newChatActionbutton = findViewById(R.id.new_chat_actionbutton);
         newChatActionbutton.setOnClickListener(this);
 
-        initChatList();
-        initFavoriteList();
-
         themeAImageview = findViewById(R.id.theme_a_imageview);
         themeAImageview.setOnClickListener(this);
         themeBImageview = findViewById(R.id.theme_b_imageview);
@@ -102,6 +110,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         exitTextview.setOnClickListener(this);
         reviseInfomationTextview = findViewById(R.id.revise_infomation_textview);
         reviseInfomationTextview.setOnClickListener(this);
+        mGenderTextview = findViewById(R.id.gender_textview);
+        mBirthdayTextview = findViewById(R.id.birthday_textview);
+        mAgeTextview = findViewById(R.id.age_textview);
+        mTagsTextview = findViewById(R.id.tags_textview);
+        mNicknameTextview = findViewById(R.id.nickname_textview);
+
+        initUserInfo();
+        initChatList();
+        initFavoriteList();
     }
 
     /**
@@ -152,6 +169,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         otherChatListRecyclerview.setHasFixedSize(false);
         otherChatListRecyclerview.setLayoutManager(layoutManager);
         otherChatListRecyclerview.setAdapter(chatListAdapter);
+    }
+
+    private void toast(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -228,5 +249,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        3.设置bitmap：
         avatarBackgroundImageview.setImageBitmap(finalBitmap);
 
+    }
+
+
+    /**
+     * 初始化用户资料
+     */
+    private void initUserInfo() {
+        ServerUtils.getUsetInfo(CommonUtils.getCurrentUserEmail(this), new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == ServerUtils.FAILED) {
+                    toast("用户资料加载失败！");
+                } else {
+                    JSONObject object = (JSONObject) msg.obj;
+                    mNicknameTextview.setText(object.getString("nickName"));
+                    mAgeTextview.setText(object.getString("age"));
+                    mBirthdayTextview.setText(object.getString("birthday"));
+                    mGenderTextview.setText(object.getString("gender"));
+                    mTagsTextview.setText(object.getString("hobby"));
+                }
+            }
+        });
     }
 }

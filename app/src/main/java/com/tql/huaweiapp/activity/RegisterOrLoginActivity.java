@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.utils.ServerUtils;
@@ -245,4 +246,5 @@ public class RegisterOrLoginActivity extends AppCompatActivity implements View.O
             }
         });
     }
+
 }
