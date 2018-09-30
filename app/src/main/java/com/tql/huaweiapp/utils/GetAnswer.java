@@ -2,6 +2,7 @@ package com.tql.huaweiapp.utils;
 
 import java.io.*;
 import java.net.*;
+
 import javax.net.ssl.HttpsURLConnection;
 
 /*
@@ -49,7 +50,7 @@ public class GetAnswer {
 
     static String question = "{ 'question' : '%s', 'top' : 1 }";
 
-    public static String PrettyPrint (String json_text) {
+    public static String PrettyPrint(String json_text) {
         JsonParser parser = new JsonParser();
         JsonElement json = parser.parse(json_text);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -57,11 +58,11 @@ public class GetAnswer {
     }
 
     // Send an HTTP POST request.
-    public static String Post (URL url, String content) throws Exception {
+    public static String Post(URL url, String content) throws Exception {
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("Content-Length", content.length() + "");
+//        connection.setRequestProperty("Content-Length", content.length() + 1000 + "");
         connection.setRequestProperty("Authorization", "EndpointKey " + endpoint_key);
         connection.setDoOutput(true);
 
@@ -71,7 +72,7 @@ public class GetAnswer {
         wr.flush();
         wr.close();
 
-        StringBuilder response = new StringBuilder ();
+        StringBuilder response = new StringBuilder();
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
 
         String line;
@@ -83,26 +84,25 @@ public class GetAnswer {
         return response.toString();
     }
 
-    public static String GetAnswers (String question) throws Exception {
+    public static String GetAnswers(String question) throws Exception {
         URL url = new URL(host + method);
-        System.out.println ("Calling " + url.toString() + ".");
+        System.out.println("Calling " + url.toString() + ".");
         System.out.println(url.toString());
         String res = Post(url, getQuestion(question));
         System.out.println(res);
         return res;
     }
 
-    private static String getQuestion(String que){
-        return String.format(question,que);
+    private static String getQuestion(String que) {
+        return String.format(question, que);
     }
 
     public static void main(String[] args) {
         try {
-            String response = GetAnswers ("你好");
-            System.out.println (PrettyPrint(response));
-        }
-        catch (Exception e) {
-            System.out.println (e);
+            String response = GetAnswers("你好");
+            System.out.println(PrettyPrint(response));
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 }
