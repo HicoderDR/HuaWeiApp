@@ -16,16 +16,7 @@ public class User {
     Date birthday;
 
     String hobby;
-
-    public User(String mail, String password, String nickName, int age, int gender, Date birthday, String hobby) {
-        this.mail = mail;
-        this.password = password;
-        this.nickName = nickName;
-        this.age = age;
-        this.gender = gender;
-        this.birthday = birthday;
-        this.hobby = hobby;
-    }
+    String favourite;
 
     public User() {
     }
@@ -92,6 +83,14 @@ public class User {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public String getFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(String favourite) {
+        this.favourite = favourite;
     }
 
     @Override

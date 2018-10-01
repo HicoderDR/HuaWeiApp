@@ -116,7 +116,7 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
      * 初始化用户资料
      */
     private void initUserInfo() {
-        ServerUtils.getUsetInfo(CommonUtils.getCurrentUserEmail(this), new Handler() {
+        ServerUtils.getUserInfo(CommonUtils.getCurrentUserEmail(this), new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);

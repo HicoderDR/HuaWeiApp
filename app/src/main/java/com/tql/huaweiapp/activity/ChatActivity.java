@@ -1,16 +1,21 @@
 package com.tql.huaweiapp.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +28,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.adapter.ChatMessageAdapter;
 import com.tql.huaweiapp.utils.CommonUtils;
+import com.tql.huaweiapp.utils.ServerUtils;
 
 import java.util.ArrayList;
 
@@ -48,6 +54,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Integer> avatars;
     private ArrayList<Integer> from;
     private ArrayList<String> messages;
+    private String bot_id = "畜生";//正在聊天的对象id
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,7 +233,19 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         builder.create().show();
                         break;
                     case R.id.favorite:
-
+                        final ProgressDialog dialog = getProgressDialog("正在收藏...");
+                        ServerUtils.setFavorite(CommonUtils.getCurrentUserEmail(ChatActivity.this), bot_id, new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                dialog.dismiss();
+                                if (msg.what == ServerUtils.FAILED) {
+                                    toast("收藏失败，请重试！");
+                                } else {
+                                    toast("已收藏！");
+                                }
+                            }
+                        });
                         break;
                 }
                 return true;
@@ -234,4 +253,19 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         });
         pm.show();
     }
+
+    private ProgressDialog getProgressDialog(String s) {
+        ProgressDialog waitingDialog = new ProgressDialog(this);
+        waitingDialog.setIndeterminate(true);
+        waitingDialog.setMessage(s);
+        waitingDialog.setCancelable(false);
+        waitingDialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
+        waitingDialog.show();
+        WindowManager.LayoutParams params = waitingDialog.getWindow().getAttributes();
+        params.width = 450;
+        params.gravity = Gravity.CENTER;
+        waitingDialog.getWindow().setAttributes(params);
+        return waitingDialog;
+    }
+
 }

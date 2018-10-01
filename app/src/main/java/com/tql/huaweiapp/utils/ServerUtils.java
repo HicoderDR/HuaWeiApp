@@ -27,6 +27,10 @@ public class ServerUtils {
     private static final String GET_USER_INFO = REST_API.concat("/get-user-by-mail");
     private static final String CHECK_UPDATE = REST_API.concat("/get-version");
     private static final String GET_BOT_INTRODUCTION = REST_API.concat("/get-introduction");
+    private static final String GET_ALL_BOT = REST_API.concat("/get-all-bot");
+    private static final String GET_FAVORITE = REST_API.concat("/get-favourite");
+    private static final String SET_FAVORITE = REST_API.concat("/change-favourite");
+    private static final String DELETE_FAVORITE = REST_API.concat("/delete-favourite");
     public static final int SUCCESSFUL = 0;
     public static final int FAILED = 1;
 
@@ -204,7 +208,7 @@ public class ServerUtils {
      * @param email
      * @param handler
      */
-    public static void getUsetInfo(String email, final Handler handler){
+    public static void getUserInfo(String email, final Handler handler) {
         OkHttpClient client = new OkHttpClient();
         final Request request = new Request.Builder().url(GET_USER_INFO + "?mail=" + email).get().build();
         Call call = client.newCall(request);
@@ -239,7 +243,7 @@ public class ServerUtils {
     /**
      * 检查更新
      */
-    public static void checkUpdate(final Handler handler){
+    public static void checkUpdate(final Handler handler) {
         OkHttpClient client = new OkHttpClient();
         final Request request = new Request.Builder().url(CHECK_UPDATE).get().build();
         Call call = client.newCall(request);
@@ -274,7 +278,87 @@ public class ServerUtils {
     /**
      * 获取人物简介
      */
-    public static void getCharacterInfo(final Handler handler){
+    public static void getCharacterInfo(final Handler handler) {
 
+    }
+
+    /**
+     * 获取所有聊天bot
+     *
+     * @param handler
+     */
+    public static void getAllBot(final Handler handler){
+        OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder().url(GET_ALL_BOT).get().build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("Fail");
+                e.printStackTrace();
+                handler.sendEmptyMessage(FAILED);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("Connection Successful");
+                String data = response.body().string();
+                System.out.println(data);
+                JSONObject object = JSON.parseObject(data);
+                if (object.getString("hr").equals("200")) {
+                    Message msg = new Message();
+                    msg.what = SUCCESSFUL;
+                    msg.obj = object.getString("data");
+                    handler.sendMessage(msg);
+                } else {
+                    Message msg = new Message();
+                    msg.what = FAILED;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
+    }
+
+    /**
+     * 添加收藏人物
+     *
+     * @param email
+     * @param favorite
+     * @param handler
+     */
+    public static void setFavorite(String email, String favorite, final Handler handler) {
+        User user = new User();
+        user.setMail(email);
+        user.setFavourite(favorite);
+        String userJson = JSON.toJSONString(user);
+        RequestBody body = FormBody.create(MediaType.parse("application/json"), userJson);
+        OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder().url(SET_FAVORITE).post(body).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("Fail");
+                e.printStackTrace();
+                handler.sendEmptyMessage(FAILED);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("Connection Successful");
+                String data = response.body().string();
+                System.out.println(data);
+                JSONObject object = JSON.parseObject(data);
+                if (object.getString("hr").equals("200")) {
+                    Message msg = new Message();
+                    msg.what = SUCCESSFUL;
+                    handler.sendMessage(msg);
+                } else {
+                    Message msg = new Message();
+                    msg.what = FAILED;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
     }
 }
