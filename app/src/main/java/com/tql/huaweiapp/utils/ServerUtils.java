@@ -25,7 +25,7 @@ public class ServerUtils {
     private static final String USER_LOGIN = REST_API.concat("/user-login");
     private static final String SET_USER = REST_API.concat("/set-user-info");
     private static final String GET_USER_INFO = REST_API.concat("/get-user-by-mail");
-    private static final String CHECK_UPDATE = REST_API.concat("/check-update");
+    private static final String CHECK_UPDATE = REST_API.concat("/get-version");
     private static final String GET_BOT_INTRODUCTION = REST_API.concat("/get-introduction");
     public static final int SUCCESSFUL = 0;
     public static final int FAILED = 1;
@@ -260,7 +260,7 @@ public class ServerUtils {
                 if (object.getString("hr").equals("200")) {
                     Message msg = new Message();
                     msg.what = SUCCESSFUL;
-                    msg.obj = object.getString("message");
+                    msg.obj = object.getString("data");
                     handler.sendMessage(msg);
                 } else {
                     Message msg = new Message();

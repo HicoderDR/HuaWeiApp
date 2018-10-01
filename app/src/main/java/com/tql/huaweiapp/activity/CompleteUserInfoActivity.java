@@ -242,11 +242,11 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
                     user.setBirthday(birthday);
                 }
                 switch (gendetEdittext.getText().toString()) {
-                    case "男":
-                        user.setGender(0);
-                        break;
-                    case "女":
+                    case "男生":
                         user.setGender(1);
+                        break;
+                    case "女生":
+                        user.setGender(0);
                         break;
                     default:
                         user.setGender(2);

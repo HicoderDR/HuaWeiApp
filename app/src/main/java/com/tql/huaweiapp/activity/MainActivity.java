@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (msg.what == ServerUtils.FAILED){
                             toast("检查失败，请重试！");
                         }else {
-                            if (msg.equals("1.0"))toast("当前已经是最新版本");
+                            if (msg.obj.toString().equals("1.0"))toast("当前已经是最新版本");
                             else toast("有新版本！");
                         }
                     }
