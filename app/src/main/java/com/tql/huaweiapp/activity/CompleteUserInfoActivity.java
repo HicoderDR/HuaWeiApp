@@ -126,7 +126,8 @@ public class CompleteUserInfoActivity extends AppCompatActivity implements View.
                     JSONObject object = JSONObject.parseObject(msg.obj.toString());
                     nicknameEdittext.setText(object.getString("nickName"));
                     ageEdittext.setText(object.getString("age"));
-                    birthdayEdittext.setText(object.getString("birthday").split("T")[0]);
+                    if (!(object.getString("birthday") == null))
+                        birthdayEdittext.setText(object.getString("birthday").split("T")[0]);
                     gendetEdittext.setText(Gender.GENDERS[Integer.parseInt(object.getString("gender"))]);
                     tagEdittext.setText(object.getString("hobby"));
                 }

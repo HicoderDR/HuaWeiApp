@@ -117,7 +117,7 @@ public class CommonUtils {
         try {
             File file = new File(path);
             if (!file.exists()) file.createNewFile();
-            BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,true)));
+            BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));
             br.write(from + "::" + message + "\n");
             br.flush();
         } catch (IOException e) {
@@ -153,5 +153,21 @@ public class CommonUtils {
             e.printStackTrace();
         }
         return messages;
+    }
+
+    public static ArrayList<String> getLocalChatList(Context context) {
+        ArrayList<String> res = new ArrayList<>();
+        String path = context.getFilesDir().getAbsolutePath() + File.separator + "messages" + File.separator;
+        if (!new File(path).exists()) return res;
+        else {
+            File file = new File(path);
+            for (File f : file.listFiles()) {
+                if (f.getName().split("_")[0].equals(getCurrentUserEmail(context).split("@")[0])) {
+                    if (!res.contains(f.getName().split("_")[1]))
+                        res.add(f.getName().split("_")[1]);
+                }
+            }
+        }
+        return res;
     }
 }

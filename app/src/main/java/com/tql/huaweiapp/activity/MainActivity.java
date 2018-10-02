@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
@@ -52,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RoundedImageView themeCImageview;
     private RecyclerView favoreitesRecyclerview;
     private RecyclerView otherChatListRecyclerview;
-    private LinearLayoutManager layoutManager;
     private ChatListAdapter chatListAdapter;
     private ChatListAdapter favoriteAdapter;
 
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initUserInfo();
         initChatList();
         initFavoriteList();
-        checkUpdateTextview = (TextView) findViewById(R.id.check_update_textview);
+        checkUpdateTextview = findViewById(R.id.check_update_textview);
         checkUpdateTextview.setOnClickListener(this);
     }
 
@@ -137,49 +138,150 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void initFavoriteList() {
         noFavoriteTextview.setVisibility(View.GONE);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        ArrayList<Integer> avatars = new ArrayList<>();
-        ArrayList<String> names = new ArrayList<>();
-        ArrayList<String> lastMessages = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            avatars.add(R.mipmap.default_character_avatar);
-            names.add("曾老师" + i);
-            lastMessages.add("曾老师" + i + "是个畜生");
-        }
-        favoriteAdapter = new ChatListAdapter(avatars, names, lastMessages);
-        favoriteAdapter.setOnItemClickListener(new ChatListAdapter.OnItemClickListener() {
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        final ArrayList<Integer> avatars = new ArrayList<>();
+        final ArrayList<String> names = new ArrayList<>();
+        final ArrayList<String> lastMessages = new ArrayList<>();
+        final ArrayList<String> bot_ids = new ArrayList<>();
+        ServerUtils.getFavorite(CommonUtils.getCurrentUserEmail(this), new Handler() {
             @Override
-            public void onItemClick(View v, int position) {
-                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == ServerUtils.FAILED) {
+                    toast("Something wrong with the Internet!");
+                } else {
+                    System.out.println(msg.obj.toString());
+                    final String[] favorite_id = msg.obj.toString().split(",");
+
+                    //check if favorite available
+                    if (msg.obj.toString().isEmpty())
+                        noFavoriteTextview.setVisibility(View.VISIBLE);
+                    else
+                        for (final String id : favorite_id) {
+                            if (id.isEmpty()) continue;
+                            ServerUtils.getBotByID(id, new Handler() {
+                                @Override
+                                public void handleMessage(Message msg) {
+                                    super.handleMessage(msg);
+                                    if (msg.what == ServerUtils.FAILED) {
+                                        toast("Something wrong with the Internet!");
+                                    } else {
+                                        String[] object = msg.obj.toString().split(",");
+                                        avatars.add(R.mipmap.default_character_avatar);
+                                        names.add(object[object.length-1]);
+                                        ArrayList<String> messages = CommonUtils.getMessagesFromLocal(MainActivity.this, id);
+                                        if (!messages.isEmpty())
+                                            lastMessages.add(messages.get(messages.size() - 1).split("::")[1]);
+                                        else
+                                            lastMessages.add("New! | You have added him! Start chatting now!");
+                                        bot_ids.add(id);
+
+                                        //update adapter
+                                        favoriteAdapter = new ChatListAdapter(avatars, names, lastMessages, bot_ids);
+                                        favoriteAdapter.setOnItemClickListener(new ChatListAdapter.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(View v, int position) {
+                                                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                                                intent.putExtra("bot_id", bot_ids.get(position));
+                                                intent.putExtra("name",names.get(position));
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        favoriteAdapter.setOnItemLongClickListener(new ChatListAdapter.OnLongClickListener() {
+                                            @Override
+                                            public void onItemLongClick(View v, final int position) {
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                                builder.setTitle("Sure to remove the character from your favorites?");
+                                                builder.setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        final ProgressDialog dialog1 = getProgressDialog("Deleting...");
+
+                                                        ServerUtils.deleteFavorite(CommonUtils.getCurrentUserEmail(MainActivity.this),bot_ids.get(position),new Handler(){
+                                                            @Override
+                                                            public void handleMessage(Message msg) {
+                                                                super.handleMessage(msg);
+                                                                dialog1.dismiss();
+                                                                if (msg.what == ServerUtils.FAILED){
+                                                                    toast("Something wrong with the Internet!");
+                                                                }else {
+                                                                    initFavoriteList();
+                                                                    toast("Successful!");
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                                builder.create().show();
+                                            }
+                                        });
+                                        favoreitesRecyclerview.setHasFixedSize(true);
+                                        favoreitesRecyclerview.setLayoutManager(layoutManager);
+                                        favoreitesRecyclerview.setAdapter(favoriteAdapter);
+                                    }
+                                }
+                            });
+                        }
+                }
             }
         });
-        favoreitesRecyclerview.setHasFixedSize(true);
-        favoreitesRecyclerview.setLayoutManager(layoutManager);
-        favoreitesRecyclerview.setAdapter(favoriteAdapter);
     }
 
     //初始化聊天列表
     private void initChatList() {
         noRecordsTextview.setVisibility(View.GONE);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        ArrayList<Integer> avatars = new ArrayList<>();
-        ArrayList<String> names = new ArrayList<>();
-        ArrayList<String> lastMessages = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            avatars.add(R.mipmap.default_character_avatar);
-            names.add("曾老师" + i);
-            lastMessages.add("曾老师" + i + "是个傻逼");
-        }
-        chatListAdapter = new ChatListAdapter(avatars, names, lastMessages);
-        chatListAdapter.setOnItemClickListener(new ChatListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        final ArrayList<Integer> avatars = new ArrayList<>();
+        final ArrayList<String> names = new ArrayList<>();
+        final ArrayList<String> lastMessages = new ArrayList<>();
+        final ArrayList<String> bot_ids = new ArrayList<>();
+
+        ArrayList<String> localChatList = CommonUtils.getLocalChatList(this);
+        if (localChatList.size() == 0) noRecordsTextview.setVisibility(View.VISIBLE);
+        else
+            for (final String id : localChatList) {
+                if (id.isEmpty()) continue;
+                ServerUtils.getBotByID(id, new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        if (msg.what == ServerUtils.FAILED) {
+                            toast("Something wrong with the Internet!");
+                        } else {
+                            String[] object = msg.obj.toString().split(",");
+                            avatars.add(R.mipmap.default_character_avatar);
+                            names.add(object[object.length-1]);
+                            ArrayList<String> messages = CommonUtils.getMessagesFromLocal(MainActivity.this, id);
+                            if (!messages.isEmpty())
+                                lastMessages.add(messages.get(messages.size() - 1).split("::")[1]);
+                            else
+                                lastMessages.add("New! | You have added him! Start chatting now!");
+                            bot_ids.add(id);
+
+                            //update adapter
+                            chatListAdapter = new ChatListAdapter(avatars, names, lastMessages, bot_ids);
+                            chatListAdapter.setOnItemClickListener(new ChatListAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View v, int position) {
+                                    Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                                    intent.putExtra("bot_id", bot_ids.get(position));
+                                    intent.putExtra("name",names.get(position));
+                                    startActivity(intent);
+                                }
+                            });
+                            chatListAdapter.setOnItemLongClickListener(new ChatListAdapter.OnLongClickListener() {
+                                @Override
+                                public void onItemLongClick(View v, int position) {
+
+                                }
+                            });
+                            otherChatListRecyclerview.setHasFixedSize(false);
+                            otherChatListRecyclerview.setLayoutManager(layoutManager);
+                            otherChatListRecyclerview.setAdapter(chatListAdapter);
+                        }
+                    }
+                });
             }
-        });
-        otherChatListRecyclerview.setHasFixedSize(false);
-        otherChatListRecyclerview.setLayoutManager(layoutManager);
-        otherChatListRecyclerview.setAdapter(chatListAdapter);
     }
 
     private void toast(String s) {
@@ -238,15 +340,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.check_update_textview:
                 final ProgressDialog dialog = getProgressDialog("正在检测更新...");
-                ServerUtils.checkUpdate(new Handler(){
+                ServerUtils.checkUpdate(new Handler() {
                     @Override
                     public void handleMessage(Message msg) {
                         super.handleMessage(msg);
                         dialog.dismiss();
-                        if (msg.what == ServerUtils.FAILED){
+                        if (msg.what == ServerUtils.FAILED) {
                             toast("检查失败，请重试！");
-                        }else {
-                            if (msg.obj.toString().equals("1.0"))toast("当前已经是最新版本");
+                        } else {
+                            if (msg.obj.toString().equals("1.0")) toast("当前已经是最新版本");
                             else toast("有新版本！");
                         }
                     }
@@ -307,7 +409,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     JSONObject object = JSONObject.parseObject(msg.obj.toString());
                     mNicknameTextview.setText(object.getString("nickName"));
                     mAgeTextview.setText(object.getString("age"));
-                    mBirthdayTextview.setText(object.getString("birthday").split("T")[0]);
+                    if (!(object.getString("birthday") == null))
+                        mBirthdayTextview.setText(object.getString("birthday").split("T")[0]);
                     mGenderTextview.setText(Gender.GENDERS[Integer.parseInt(object.getString("gender"))]);
                     mTagsTextview.setText(object.getString("hobby"));
                     mTagsTextview.setText(object.getString("hobby"));

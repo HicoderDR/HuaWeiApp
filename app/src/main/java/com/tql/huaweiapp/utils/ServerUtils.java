@@ -27,6 +27,7 @@ public class ServerUtils {
     private static final String GET_USER_INFO = REST_API.concat("/get-user-by-mail");
     private static final String CHECK_UPDATE = REST_API.concat("/get-version");
     private static final String GET_BOT_INTRODUCTION = REST_API.concat("/get-introduction");
+    private static final String GET_BOT_BY_ID = REST_API.concat("/get-bot");
     private static final String GET_ALL_BOT = REST_API.concat("/get-all-bot");
     private static final String GET_FAVORITE = REST_API.concat("/get-favourite");
     private static final String SET_FAVORITE = REST_API.concat("/change-favourite");
@@ -287,7 +288,7 @@ public class ServerUtils {
      *
      * @param handler
      */
-    public static void getAllBot(final Handler handler){
+    public static void getAllBot(final Handler handler) {
         OkHttpClient client = new OkHttpClient();
         final Request request = new Request.Builder().url(GET_ALL_BOT).get().build();
         Call call = client.newCall(request);
@@ -352,6 +353,107 @@ public class ServerUtils {
                 if (object.getString("hr").equals("200")) {
                     Message msg = new Message();
                     msg.what = SUCCESSFUL;
+                    handler.sendMessage(msg);
+                } else {
+                    Message msg = new Message();
+                    msg.what = FAILED;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
+    }
+
+    public static void deleteFavorite(String email, String favoriteToDelete, final Handler handler) {
+        User user = new User();
+        user.setMail(email);
+        user.setFavourite(favoriteToDelete);
+        String userJson = JSON.toJSONString(user);
+        RequestBody body = FormBody.create(MediaType.parse("application/json"), userJson);
+        OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder().url(DELETE_FAVORITE).post(body).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("Fail");
+                e.printStackTrace();
+                handler.sendEmptyMessage(FAILED);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("Connection Successful");
+                String data = response.body().string();
+                System.out.println(data);
+                JSONObject object = JSON.parseObject(data);
+                if (object.getString("hr").equals("200")) {
+                    Message msg = new Message();
+                    msg.what = SUCCESSFUL;
+                    handler.sendMessage(msg);
+                } else {
+                    Message msg = new Message();
+                    msg.what = FAILED;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
+    }
+
+    public static void getFavorite(String email, final Handler handler) {
+        System.out.println("GET_FAVORITE:" + email);
+        OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder().url(GET_FAVORITE + "?mail=" + email).get().build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("Fail");
+                e.printStackTrace();
+                handler.sendEmptyMessage(FAILED);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("Connection Successful");
+                String data = response.body().string();
+                System.out.println("getFavorite:" + data);
+                JSONObject object = JSON.parseObject(data);
+                if (object.getString("hr").equals("200")) {
+                    Message msg = new Message();
+                    msg.what = SUCCESSFUL;
+                    msg.obj = object.getString("data");
+                    handler.sendMessage(msg);
+                } else {
+                    Message msg = new Message();
+                    msg.what = FAILED;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
+    }
+
+    public static void getBotByID(String bot_id, final Handler handler) {
+        OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder().url(GET_BOT_BY_ID + "?botID=" + bot_id).get().build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("Fail");
+                e.printStackTrace();
+                handler.sendEmptyMessage(FAILED);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("Connection Successful");
+                String data = response.body().string();
+                System.out.println("getBotByID:" + data);
+                JSONObject object = JSON.parseObject(data);
+                if (object.getString("hr").equals("200")) {
+                    Message msg = new Message();
+                    msg.what = SUCCESSFUL;
+                    msg.obj = object.getString("data");
                     handler.sendMessage(msg);
                 } else {
                     Message msg = new Message();

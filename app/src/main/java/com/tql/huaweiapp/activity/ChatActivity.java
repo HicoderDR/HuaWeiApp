@@ -54,13 +54,17 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Integer> avatars;
     private ArrayList<Integer> from;
     private ArrayList<String> messages;
-    private String bot_id = "畜生";//正在聊天的对象id
+    private String bot_id = "0";//正在聊天的对象id
+    private String name = "null";//正在聊天的对象de ming zi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(CommonUtils.getTheme(this));
         setContentView(R.layout.activity_chat);
+        Intent intent = getIntent();
+        bot_id = intent.getStringExtra("bot_id");
+        name = intent.getStringExtra("name");
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -98,6 +102,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         });
         messageListRecyclerview = findViewById(R.id.message_list_recyclerview);
 
+        characterNameTextview.setText(name);
+
         initChatList();
     }
 
@@ -108,7 +114,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         avatars = new ArrayList<>();
         messages = new ArrayList<>();
         from = new ArrayList<>();
-        for (String line : CommonUtils.getMessagesFromLocal(this, "1")) {
+        for (String line : CommonUtils.getMessagesFromLocal(this, bot_id)) {
             if (Integer.valueOf(line.split("::")[0]).equals(ChatMessageAdapter.MY_MESSAGE)) {
                 from.add(ChatMessageAdapter.MY_MESSAGE);
                 avatars.add(R.mipmap.default_avatar);
@@ -165,14 +171,14 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             avatars.add(R.mipmap.default_avatar);
             messages.add(msg);
             from.add(ChatMessageAdapter.MY_MESSAGE);
-            CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.MY_MESSAGE, msg, "1");
+            CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.MY_MESSAGE, msg, bot_id);
             try {
                 String response = GetAnswers(msg);
                 avatars.add(R.mipmap.default_character_avatar);
                 String answer = getAnswer(PrettyPrint(response));
                 messages.add(answer);
                 from.add(ChatMessageAdapter.YOUR_MESSAGE);
-                CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.YOUR_MESSAGE, answer, "1");
+                CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.YOUR_MESSAGE, answer, bot_id);
             } catch (Exception e) {
                 System.out.println(e);
             }

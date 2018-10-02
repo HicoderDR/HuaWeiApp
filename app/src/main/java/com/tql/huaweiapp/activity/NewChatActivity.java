@@ -60,6 +60,7 @@ public class NewChatActivity extends AppCompatActivity implements View.OnClickLi
         final ArrayList<Integer> avatars = new ArrayList<>();
         final ArrayList<String> names = new ArrayList<>();
         final ArrayList<String> informations = new ArrayList<>();
+        final ArrayList<String> bot_ids = new ArrayList<>();
 
         ServerUtils.getAllBot(new Handler() {
             @Override
@@ -77,13 +78,18 @@ public class NewChatActivity extends AppCompatActivity implements View.OnClickLi
                         avatars.add(R.mipmap.default_character_avatar);
                         names.add(object.getString("name"));
                         informations.add(object.getString("introduction"));
+                        bot_ids.add(object.getString("botID"));
+                        System.out.println("bot_ID:"+object.getString("botID"));
                     }
 
-                    CharacterListAdapter adapter = new CharacterListAdapter(avatars, names, informations);
+                    final CharacterListAdapter adapter = new CharacterListAdapter(avatars, names, informations, bot_ids);
                     adapter.setOnItemClickListener(new CharacterListAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View v, int position) {
-                            startActivity(new Intent(NewChatActivity.this, ChatActivity.class));
+                            Intent intent = new Intent(NewChatActivity.this, ChatActivity.class);
+                            intent.putExtra("bot_id", adapter.getCharacterId(position));
+                            intent.putExtra("name",names.get(position));
+                            startActivity(intent);
                         }
                     });
                     charactersListRecyclerView.setLayoutManager(new LinearLayoutManager(NewChatActivity.this, LinearLayoutManager.VERTICAL, false));

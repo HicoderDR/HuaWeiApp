@@ -16,12 +16,15 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     private ArrayList<Integer> avatars;
     private ArrayList<String> names;
     private ArrayList<String> informations;
+    private ArrayList<String> bot_ids;
+
     private OnItemClickListener onItemClickListener;
 
-    public CharacterListAdapter(ArrayList<Integer> avatars, ArrayList<String> names, ArrayList<String> informations) {
+    public CharacterListAdapter(ArrayList<Integer> avatars, ArrayList<String> names, ArrayList<String> informations, ArrayList<String> bot_ids) {
         this.avatars = avatars;
         this.names = names;
         this.informations = informations;
+        this.bot_ids = bot_ids;
     }
 
     @NonNull
@@ -45,6 +48,10 @@ public class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdap
     @Override
     public int getItemCount() {
         return avatars.size();
+    }
+
+    public String getCharacterId(int position){
+        return bot_ids.get(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
