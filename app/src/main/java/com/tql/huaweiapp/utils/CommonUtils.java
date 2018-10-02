@@ -45,6 +45,7 @@ public class CommonUtils {
                 theme = R.style.Theme_Application_Blue;
                 break;
             case THEME_GREEN:
+                theme = R.style.Theme_Application_Green;
                 break;
         }
         return theme;

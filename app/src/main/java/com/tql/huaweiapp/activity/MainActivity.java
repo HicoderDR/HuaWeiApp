@@ -21,8 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
@@ -79,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 检查更新
      */
     private TextView checkUpdateTextview;
+    private RoundedImageView themeDImageview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         themeBImageview.setOnClickListener(this);
         themeCImageview = findViewById(R.id.theme_c_imageview);
         themeCImageview.setOnClickListener(this);
-
+        themeDImageview = findViewById(R.id.theme_d_imageview);
+        themeDImageview.setOnClickListener(this);
 
         logOutTextview = findViewById(R.id.log_out_textview);
         logOutTextview.setOnClickListener(this);
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     } else {
                                         String[] object = msg.obj.toString().split(",");
                                         avatars.add(R.mipmap.default_character_avatar);
-                                        names.add(object[object.length-1]);
+                                        names.add(object[object.length - 1]);
                                         ArrayList<String> messages = CommonUtils.getMessagesFromLocal(MainActivity.this, id);
                                         if (!messages.isEmpty())
                                             lastMessages.add(messages.get(messages.size() - 1).split("::")[1]);
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             public void onItemClick(View v, int position) {
                                                 Intent intent = new Intent(MainActivity.this, ChatActivity.class);
                                                 intent.putExtra("bot_id", bot_ids.get(position));
-                                                intent.putExtra("name",names.get(position));
+                                                intent.putExtra("name", names.get(position));
                                                 startActivity(intent);
                                             }
                                         });
@@ -197,14 +197,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         final ProgressDialog dialog1 = getProgressDialog("Deleting...");
 
-                                                        ServerUtils.deleteFavorite(CommonUtils.getCurrentUserEmail(MainActivity.this),bot_ids.get(position),new Handler(){
+                                                        ServerUtils.deleteFavorite(CommonUtils.getCurrentUserEmail(MainActivity.this), bot_ids.get(position), new Handler() {
                                                             @Override
                                                             public void handleMessage(Message msg) {
                                                                 super.handleMessage(msg);
                                                                 dialog1.dismiss();
-                                                                if (msg.what == ServerUtils.FAILED){
+                                                                if (msg.what == ServerUtils.FAILED) {
                                                                     toast("Something wrong with the Internet!");
-                                                                }else {
+                                                                } else {
                                                                     initFavoriteList();
                                                                     toast("Successful!");
                                                                 }
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         } else {
                             String[] object = msg.obj.toString().split(",");
                             avatars.add(R.mipmap.default_character_avatar);
-                            names.add(object[object.length-1]);
+                            names.add(object[object.length - 1]);
                             ArrayList<String> messages = CommonUtils.getMessagesFromLocal(MainActivity.this, id);
                             if (!messages.isEmpty())
                                 lastMessages.add(messages.get(messages.size() - 1).split("::")[1]);
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 public void onItemClick(View v, int position) {
                                     Intent intent = new Intent(MainActivity.this, ChatActivity.class);
                                     intent.putExtra("bot_id", bot_ids.get(position));
-                                    intent.putExtra("name",names.get(position));
+                                    intent.putExtra("name", names.get(position));
                                     startActivity(intent);
                                 }
                             });
@@ -309,6 +309,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.theme_c_imageview:
                 CommonUtils.setTheme(this, CommonUtils.THEME_BLUE);
+                refreshTheme();
+                break;
+            case R.id.theme_d_imageview:
+                CommonUtils.setTheme(this, CommonUtils.THEME_GREEN);
                 refreshTheme();
                 break;
             case R.id.log_out_textview:

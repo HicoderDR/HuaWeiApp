@@ -315,21 +315,21 @@
                                         app:riv_border_width="0dp"
                                         app:riv_oval="true" />
 
-                                    <!--<com.makeramen.roundedimageview.RoundedImageView-->
-                                        <!--android:id="@+id/theme_d_imageview"-->
-                                        <!--android:layout_width="30dp"-->
-                                        <!--android:layout_height="30dp"-->
-                                        <!--android:layout_marginStart="10dp"-->
-                                        <!--android:layout_marginTop="5dp"-->
-                                        <!--android:layout_marginEnd="10dp"-->
-                                        <!--android:layout_marginBottom="5dp"-->
-                                        <!--android:elevation="20dp"-->
-                                        <!--android:scaleType="centerCrop"-->
-                                        <!--android:src="@color/green_primary"-->
-                                        <!--android:transitionName="avatar"-->
-                                        <!--app:riv_border_color="@color/green_primary"-->
-                                        <!--app:riv_border_width="0dp"-->
-                                        <!--app:riv_oval="true" />-->
+                                    <com.makeramen.roundedimageview.RoundedImageView
+                                        android:id="@+id/theme_d_imageview"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:elevation="20dp"
+                                        android:scaleType="centerCrop"
+                                        android:src="@color/green_primary"
+                                        android:transitionName="avatar"
+                                        app:riv_border_color="@color/green_primary"
+                                        app:riv_border_width="0dp"
+                                        app:riv_oval="true" />
 
 
                                 </LinearLayout>
