@@ -15,11 +15,18 @@
     <color name="blue_accent">#4e85d6</color>
 
     <!--粉色主题-->
-    <color name="pink_primary">#E91E63</color>
-    <color name="pink_primary_dark">#C2185B</color>
-    <color name="pink_primary_light">#F8BBD0</color>
-    <color name="pink_accent">#FF4081</color>
-    <color name="pink_background_color">#ffdfea</color>
+    <color name="pink_primary">#f068ac</color>
+    <color name="pink_primary_dark">#f068ac</color>
+    <color name="pink_primary_light">#f2c9d0</color>
+    <color name="pink_accent">#d8117f</color>
+    <color name="pink_background_color">#dcb0c4</color>
+
+    <!--绿色主题-->
+    <color name="green_primary">#8bcb17</color>
+    <color name="green_primary_dark">#4a780a</color>
+    <color name="green_primary_light">#81d150</color>
+    <color name="green_accent">#c2e84d</color>
+    <color name="green_background_color">#c9d68f</color>
 
     <!--其他颜色值-->
     <color name="trans">#00000000</color>
