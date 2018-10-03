@@ -1,6 +1,7 @@
 package com.tql.huaweiapp.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -13,10 +14,15 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(CommonUtils.getTheme(this));
-        setContentView(R.layout.activity_splash);
-        if (CommonUtils.getCurrentUserEmail(this).equals(""))
-            startActivity(new Intent(SplashActivity.this, RegisterOrLoginActivity.class));
-        else startActivity(new Intent(SplashActivity.this, MainActivity.class));
-        finish();
+        setContentView(R.layout.window_background);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                /* Create an Intent that will start the Main WordPress Activity. */
+                if (CommonUtils.getCurrentUserEmail(SplashActivity.this).equals(""))
+                    startActivity(new Intent(SplashActivity.this, RegisterOrLoginActivity.class));
+                else startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                finish();
+            }
+        }, 2000);
     }
 }
