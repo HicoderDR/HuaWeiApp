@@ -25,12 +25,17 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.microsoft.cognitiveservices.luis.clientlibrary.LUISClient;
+import com.microsoft.cognitiveservices.luis.clientlibrary.LUISEntity;
+import com.microsoft.cognitiveservices.luis.clientlibrary.LUISResponse;
+import com.microsoft.cognitiveservices.luis.clientlibrary.LUISResponseHandler;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.adapter.ChatMessageAdapter;
 import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.utils.ServerUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.tql.huaweiapp.utils.GetAnswer.GetAnswers;
 import static com.tql.huaweiapp.utils.GetAnswer.PrettyPrint;
@@ -56,6 +61,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<String> messages;
     private String bot_id = "0";//正在聊天的对象id
     private String name = "null";//正在聊天的对象de ming zi
+    private String LUISappID = "f281723c-4764-405e-bbeb-cd6c12332a22";
+    private String LUISappKey = "36fb4cae87a246169da2edf98e082113";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,15 +179,24 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             messages.add(msg);
             from.add(ChatMessageAdapter.MY_MESSAGE);
             CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.MY_MESSAGE, msg, bot_id);
+            //向LUIS发送并获得intent
             try {
-                String response = GetAnswers(msg);
-                avatars.add(R.mipmap.default_character_avatar);
-                String answer = getAnswer(PrettyPrint(response));
-                messages.add(answer);
-                from.add(ChatMessageAdapter.YOUR_MESSAGE);
-                CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.YOUR_MESSAGE, answer, bot_id);
+                LUISClient client = new LUISClient(LUISappID,LUISappKey, true);
+                client.predict(msg, new LUISResponseHandler() {
+                    @Override
+                    public void onSuccess(LUISResponse response) {
+                        String topIntent = response.getTopIntent().getName();
+                        System.out.println(topIntent);
+                        List<LUISEntity> entities = response.getEntities();
+                        getAns(topIntent);
+                    }
+                    @Override
+                    public void onFailure(Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                });
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
 
             messageListRecyclerview.setAdapter(new ChatMessageAdapter(avatars, messages, from));
@@ -189,13 +205,27 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //获取回答
+    private void getAns(String msg) {
+        try {
+            String response = GetAnswers(msg);
+            avatars.add(R.mipmap.default_character_avatar);
+            String answer = polishAnswer(PrettyPrint(response));
+            messages.add(answer);
+            from.add(ChatMessageAdapter.YOUR_MESSAGE);
+            CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.YOUR_MESSAGE, answer, bot_id);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     /**
-     * 获取回答
+     * 整理回答格式
      *
      * @param s
      * @return
      */
-    private String getAnswer(String s) {
+    private String polishAnswer(String s) {
         JSONObject data = JSON.parseObject(JSON.parseObject(s).getJSONArray("answers").getString(0));
         System.out.println(data);
         System.out.println("+++++++++" + data.getString("answer"));
