@@ -27,6 +27,8 @@ public class CommonUtils {
     public static final int THEME_RED = 1;
     public static final int THEME_BLUE = 2;
     public static final int THEME_GREEN = 3;
+    public static final int THEME_ORANGE = 4;
+
     private static ArrayList<AppCompatActivity> activities = new ArrayList<>();
 
 
@@ -46,6 +48,9 @@ public class CommonUtils {
                 break;
             case THEME_GREEN:
                 theme = R.style.Theme_Application_Green;
+                break;
+            case THEME_ORANGE:
+                theme = R.style.Theme_Application_Orange;
                 break;
         }
         return theme;

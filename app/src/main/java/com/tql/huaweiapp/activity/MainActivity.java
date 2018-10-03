@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -78,6 +79,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private TextView checkUpdateTextview;
     private RoundedImageView themeDImageview;
+    /**
+     * 关于应用
+     */
+    private TextView aboutAppTextview;
+    private RoundedImageView themeEImageview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +137,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initFavoriteList();
         checkUpdateTextview = findViewById(R.id.check_update_textview);
         checkUpdateTextview.setOnClickListener(this);
+        aboutAppTextview = (TextView) findViewById(R.id.about_app_textview);
+        aboutAppTextview.setOnClickListener(this);
+        themeEImageview = findViewById(R.id.theme_e_imageview);
+        themeEImageview.setOnClickListener(this);
     }
 
     /**
@@ -315,6 +325,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 CommonUtils.setTheme(this, CommonUtils.THEME_GREEN);
                 refreshTheme();
                 break;
+            case R.id.theme_e_imageview:
+                CommonUtils.setTheme(this, CommonUtils.THEME_ORANGE);
+                refreshTheme();
+                break;
             case R.id.log_out_textview:
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
                 builder1.setMessage("确定要注销账号吗？");
@@ -358,6 +372,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
                 break;
+            case R.id.about_app_textview:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                View view = LayoutInflater.from(this).inflate(R.layout.activity_about_app, null);
+                builder.setView(view);
+                builder.create().show();
+                break;
+
         }
     }
 

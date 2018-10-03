@@ -35,9 +35,9 @@
                     android:layout_weight="7">
 
                     <ScrollView
-                        android:scrollbars="none"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -47,194 +47,194 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
                                 android:layout_marginStart="5dp"
+                                android:layout_marginTop="10dp"
                                 android:layout_marginEnd="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:background="@drawable/slidemenu_bg"
                                 android:orientation="vertical">
 
                                 <LinearLayout
-                                    android:layout_margin="5dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
-                                        android:textColor="@color/textcolor_secondary"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:text="昵称"
+                                        android:textColor="@color/textcolor_secondary"
                                         android:textSize="18sp" />
 
                                     <ImageView
                                         android:layout_width="1dp"
                                         android:layout_height="match_parent"
-                                        android:layout_marginBottom="5dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginBottom="5dp"
                                         android:background="@color/alertdialog_line" />
 
                                     <TextView
                                         android:id="@+id/nickname_textview"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:text="steve_chph"
                                         android:textSize="16sp" />
 
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_margin="5dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
-                                        android:textColor="@color/textcolor_secondary"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:text="性别"
-                                        android:textSize="18sp"/>
+                                        android:textColor="@color/textcolor_secondary"
+                                        android:textSize="18sp" />
 
                                     <ImageView
                                         android:layout_width="1dp"
                                         android:layout_height="match_parent"
-                                        android:layout_marginBottom="5dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginBottom="5dp"
                                         android:background="@color/alertdialog_line" />
 
                                     <TextView
                                         android:id="@+id/gender_textview"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:text="女"
                                         android:textSize="16sp" />
 
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_margin="5dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
-                                        android:textColor="@color/textcolor_secondary"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:text="生日"
+                                        android:textColor="@color/textcolor_secondary"
                                         android:textSize="18sp" />
 
                                     <ImageView
                                         android:layout_width="1dp"
                                         android:layout_height="match_parent"
-                                        android:layout_marginBottom="5dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginBottom="5dp"
                                         android:background="@color/alertdialog_line" />
 
                                     <TextView
                                         android:id="@+id/birthday_textview"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:text="1999-02-31"
                                         android:textSize="16sp" />
 
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_margin="5dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
-                                        android:textColor="@color/textcolor_secondary"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:text="年龄"
+                                        android:textColor="@color/textcolor_secondary"
                                         android:textSize="18sp" />
 
                                     <ImageView
                                         android:layout_width="1dp"
                                         android:layout_height="match_parent"
-                                        android:layout_marginBottom="5dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginBottom="5dp"
                                         android:background="@color/alertdialog_line" />
 
                                     <TextView
                                         android:id="@+id/age_textview"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:text="20"
                                         android:textSize="16sp" />
 
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_margin="5dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
-                                        android:textColor="@color/textcolor_secondary"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:text="标签"
+                                        android:textColor="@color/textcolor_secondary"
                                         android:textSize="18sp" />
 
                                     <ImageView
                                         android:id="@+id/img_line"
                                         android:layout_width="1dp"
                                         android:layout_height="match_parent"
-                                        android:layout_marginBottom="5dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginBottom="5dp"
                                         android:background="@color/alertdialog_line" />
 
                                     <TextView
                                         android:id="@+id/tags_textview"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:text=""
                                         android:textSize="16sp" />
 
@@ -250,31 +250,31 @@
                                 android:orientation="vertical">
 
                                 <LinearLayout
-                                    android:layout_margin="5dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:gravity="center"
-                                        android:textColor="@color/textcolor_secondary"
                                         android:text="主题"
+                                        android:textColor="@color/textcolor_secondary"
                                         android:textSize="18sp" />
 
                                     <com.makeramen.roundedimageview.RoundedImageView
                                         android:id="@+id/theme_a_imageview"
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:elevation="20dp"
                                         android:scaleType="centerCrop"
                                         android:src="@color/pink_primary"
@@ -287,10 +287,10 @@
                                         android:id="@+id/theme_b_imageview"
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:elevation="20dp"
                                         android:scaleType="centerCrop"
                                         android:src="@color/red_primary"
@@ -303,10 +303,10 @@
                                         android:id="@+id/theme_c_imageview"
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
                                         android:elevation="20dp"
                                         android:scaleType="centerCrop"
                                         android:src="@color/blue_primary"
@@ -331,6 +331,22 @@
                                         app:riv_border_width="0dp"
                                         app:riv_oval="true" />
 
+                                    <com.makeramen.roundedimageview.RoundedImageView
+                                        android:id="@+id/theme_e_imageview"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:elevation="20dp"
+                                        android:scaleType="centerCrop"
+                                        android:src="@color/orange_primary"
+                                        android:transitionName="avatar"
+                                        app:riv_border_color="@color/orange_primary"
+                                        app:riv_border_width="0dp"
+                                        app:riv_oval="true" />
+
 
                                 </LinearLayout>
 
@@ -339,27 +355,28 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
                                 android:layout_marginStart="5dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_marginEnd="5dp"
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/slidemenu_bg"
                                 android:orientation="vertical">
 
                                 <LinearLayout
-                                    android:layout_margin="10dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
                                     android:orientation="horizontal">
 
                                     <TextView
+                                        android:id="@+id/about_app_textview"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_marginBottom="5dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginBottom="5dp"
                                         android:gravity="left"
-                                        android:textColor="@color/textcolor_secondary"
                                         android:text="关于应用"
+                                        android:textColor="@color/textcolor_secondary"
                                         android:textSize="18sp" />
 
                                 </LinearLayout>
@@ -373,20 +390,20 @@
                                     android:background="@color/alertdialog_line" />
 
                                 <LinearLayout
-                                    android:layout_margin="10dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         android:id="@+id/check_update_textview"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_marginBottom="5dp"
                                         android:layout_marginTop="5dp"
+                                        android:layout_marginBottom="5dp"
                                         android:gravity="left"
-                                        android:textColor="@color/textcolor_secondary"
                                         android:text="检查更新"
+                                        android:textColor="@color/textcolor_secondary"
                                         android:textSize="18sp" />
 
                                 </LinearLayout>
@@ -418,8 +435,8 @@
                     <ImageView
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@color/alertdialog_line" />
 
                     <TextView
@@ -435,8 +452,8 @@
                     <ImageView
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@color/alertdialog_line" />
 
                     <TextView

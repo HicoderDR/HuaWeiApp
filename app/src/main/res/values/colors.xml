@@ -22,11 +22,18 @@
     <color name="pink_background_color">#dcb0c4</color>
 
     <!--绿色主题-->
-    <color name="green_primary">#8bcb17</color>
-    <color name="green_primary_dark">#4a780a</color>
-    <color name="green_primary_light">#81d150</color>
-    <color name="green_accent">#c2e84d</color>
-    <color name="green_background_color">#c9d68f</color>
+    <color name="green_primary">#4CAF50</color>
+    <color name="green_primary_dark">#388E3C</color>
+    <color name="green_primary_light">#C8E6C9</color>
+    <color name="green_accent">#8BC34A</color>
+    <color name="green_background_color">#a7d68f</color>
+
+    <!--橙色主题-->
+    <color name="orange_primary">#FF9800</color>
+    <color name="orange_primary_dark">#F57C00</color>
+    <color name="orange_primary_light">#FFE0B2</color>
+    <color name="orange_accent">#FF5722</color>
+    <color name="orange_background_color">#ffdd92</color>
 
     <!--其他颜色值-->
     <color name="trans">#00000000</color>

@@ -40,6 +40,14 @@
         <item name="background_color">@color/green_background_color</item>
     </style>
 
+    <style name="Theme.Application.Orange" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/orange_primary</item>
+        <item name="colorPrimaryDark">@color/orange_primary_dark</item>
+        <item name="colorAccent">@color/orange_accent</item>
+        <item name="colorPrimaryLight">@color/orange_primary_light</item>
+        <item name="background_color">@color/orange_background_color</item>
+    </style>
+
     <!-- 自定义仿IOS的AlertDialog的样式 -->
     <style name="AlertDialogStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
