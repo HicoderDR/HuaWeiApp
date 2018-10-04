@@ -227,6 +227,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
      * 发送消息逻辑
      */
     private void sendMessage() {
+        stopListening();
         String msg = messageEdittext.getText().toString().replace('\n', ' ');
         if (msg.isEmpty()) toast("内容不能为空！");
         else {
