@@ -30,6 +30,18 @@ public class LUISEntity {
         resolution = JSONresolution != null ? LUISUtility.JSONObjectToMap(JSONresolution) : null;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"name\":\"" + name + '\"' +
+                ",\"type\":\"" + type + '\"' +
+                ",\"startIndex\":" + startIndex +
+                ",\"endIndex\":" + endIndex +
+                ",\"score\":" + score +
+                ",\"resolution\":" + resolution.toString() +
+                '}';
+    }
+
     public String getName() {
         return name;
     }

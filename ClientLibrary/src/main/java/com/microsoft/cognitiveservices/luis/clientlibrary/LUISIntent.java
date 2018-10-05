@@ -1,6 +1,7 @@
 package com.microsoft.cognitiveservices.luis.clientlibrary;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -35,6 +36,35 @@ public class LUISIntent {
         }
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"intent\":\"" + name + '\"' +
+                ", \"score\":" + score +
+                '}';
+    }
+
+    public String LUISActionList2String(){
+        if (actions == null) return "";
+        JSONArray array = new JSONArray();
+        JSONObject jsonObject = null;
+        LUISAction info = null;
+        for (int i = 0; i < actions.size(); i++) {
+            info = actions.get(i);
+            jsonObject = new JSONObject();
+            try {
+                jsonObject.put("\"triggered\"", info.getTrigerred());
+                jsonObject.put("\"name\"", info.getName());
+                jsonObject.put("\"parameters\"",info.getParams());
+            }
+            catch (JSONException e){
+                System.out.print("转化失败3");
+            }
+            array.put(jsonObject);
+        }
+        return array.toString();
+    }
+
     public String getName() {
         return name;
     }
@@ -46,4 +76,5 @@ public class LUISIntent {
     public List<LUISAction> getActions() {
         return actions;
     }
+
 }

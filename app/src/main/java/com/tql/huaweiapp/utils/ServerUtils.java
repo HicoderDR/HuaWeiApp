@@ -498,10 +498,10 @@ public class ServerUtils {
     }
 
     public static void getAnswerWithEntities(LUISResponse response, final Handler handler) {
-        String responseJson = JSON.toJSONString(response);
+        String responseJson = response.toString() ;
         OkHttpClient client = new OkHttpClient();
         RequestBody body = FormBody.create(MediaType.parse("application/json"), responseJson);
-        final Request request = new Request.Builder().url(GET_ANSWER_WITH_ENTITIES + "?StringResponse=" + responseJson).post(null).build();
+        final Request request = new Request.Builder().url(GET_ANSWER_WITH_ENTITIES ).post(body).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -522,6 +522,7 @@ public class ServerUtils {
                 if (object.getString("hr").equals("200")) {
                     Message msg = new Message();
                     msg.what = SUCCESSFUL;
+                    msg.obj = object.getString("data");
                     handler.sendMessage(msg);
                 } else {
                     Message msg = new Message();

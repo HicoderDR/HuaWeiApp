@@ -35,6 +35,16 @@ public class LUISAction {
         }
     }
 
+    @Override
+    public String toString() {
+
+        return "{" +
+                "\"triggered\":" + triggered +
+                ", \"name\":\"" + name + '\"' +
+                ", \"parameters\":" + parameters +
+                '}';
+    }
+
     public boolean getTrigerred() {
         return triggered;
     }
