@@ -522,6 +522,7 @@ public class ServerUtils {
                 if (object.getString("hr").equals("200")) {
                     Message msg = new Message();
                     msg.what = SUCCESSFUL;
+                    msg.obj = object.getString("data");
                     handler.sendMessage(msg);
                 } else {
                     Message msg = new Message();

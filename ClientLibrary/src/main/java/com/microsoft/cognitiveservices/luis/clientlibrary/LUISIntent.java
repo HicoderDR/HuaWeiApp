@@ -59,7 +59,7 @@ public class LUISIntent {
                 jsonObject.put("\"parameters\"",info.getParams());
             }
             catch (JSONException e){
-                System.out.print("转化失败");
+                System.out.print("转化失败3");
             }
             array.put(jsonObject);
         }

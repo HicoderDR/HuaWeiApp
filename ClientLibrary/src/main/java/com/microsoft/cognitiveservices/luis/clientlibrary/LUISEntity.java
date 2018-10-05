@@ -34,11 +34,11 @@ public class LUISEntity {
     public String toString() {
         return "{" +
                 "\"name\":\"" + name + '\"' +
-                ", \"type\":\"" + type + '\"' +
-                ",\" startIndex\":" + startIndex +
-                ",\" endIndex\":" + endIndex +
-                ",\" score\":" + score +
-                ", \"resolution\":" + resolution.toString() +
+                ",\"type\":\"" + type + '\"' +
+                ",\"startIndex\":" + startIndex +
+                ",\"endIndex\":" + endIndex +
+                ",\"score\":" + score +
+                ",\"resolution\":" + resolution.toString() +
                 '}';
     }
 

@@ -88,12 +88,12 @@ public class LUISResponse {
             info = intents.get(i);
             jsonObject = new JSONObject();
             try {
-                jsonObject.put("\"name\"", info.getName());
-                jsonObject.put("\"score\"", info.getScore());
-                jsonObject.put("\"actions\"",info.getActions());
+                jsonObject.put("name", info.getName());
+                jsonObject.put("score", info.getScore());
+                jsonObject.put("actions",info.getActions());
             }
             catch (JSONException e){
-                System.out.print("转化失败");
+                System.out.print("转化失败1");
             }
             array.put(jsonObject);
         }
@@ -109,15 +109,15 @@ public class LUISResponse {
             info = entities.get(i);
             jsonObject = new JSONObject();
             try {
-                jsonObject.put("\"name\"", info.getName());
-                jsonObject.put("\"type\"", info.getType());
-                jsonObject.put("\"startIndex\"",info.getStartIndex());
-                jsonObject.put("\"endIndex\"", info.getEndIndex());
-                jsonObject.put("\"score\"", info.getScore());
-                jsonObject.put("\"resolution\"", info.getResolution());
+                jsonObject.put("name", info.getName().replace(" ", ""));
+                jsonObject.put("type", info.getType());
+                jsonObject.put("startIndex",info.getStartIndex());
+                jsonObject.put("endIndex", info.getEndIndex());
+                //jsonObject.put("score", info.getScore());
+                //jsonObject.put("resolution", info.getResolution());
             }
             catch (JSONException e){
-                System.out.print("转化失败");
+                e.printStackTrace();
             }
             array.put(jsonObject);
         }
