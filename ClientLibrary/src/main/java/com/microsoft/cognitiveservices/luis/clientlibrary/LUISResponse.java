@@ -67,6 +67,62 @@ public class LUISResponse {
         }
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"query\":\"" + query + '\"' +
+                ", \"topScoringIntent\":" + topScoringIntent.toString() +
+                ", \"intents\":" +  LUISIntentList2String()+
+                ", \"entities\":" + LUISEntityList2String() +
+                ", \"compositeEntities\":" + compositeEntities.toString() +
+                ", \"dialog\":" + dialog +
+                '}';
+    }
+
+    public String LUISIntentList2String(){
+        if (intents == null) return "";
+        JSONArray array = new JSONArray();
+        JSONObject jsonObject = null;
+        LUISIntent info = null;
+        for (int i = 0; i < intents.size(); i++) {
+            info = intents.get(i);
+            jsonObject = new JSONObject();
+            try {
+                jsonObject.put("\"name\"", info.getName());
+                jsonObject.put("\"score\"", info.getScore());
+                jsonObject.put("\"actions\"",info.getActions());
+            }
+            catch (JSONException e){
+                System.out.print("转化失败");
+            }
+            array.put(jsonObject);
+        }
+        return array.toString();
+    }
+
+    public String LUISEntityList2String(){
+        if (entities == null) return "";
+        JSONArray array = new JSONArray();
+        JSONObject jsonObject = null;
+        LUISEntity info = null;
+        for (int i = 0; i < entities.size(); i++) {
+            info = entities.get(i);
+            jsonObject = new JSONObject();
+            try {
+                jsonObject.put("\"name\"", info.getName());
+                jsonObject.put("\"type\"", info.getType());
+                jsonObject.put("\"startIndex\"",info.getStartIndex());
+                jsonObject.put("\"endIndex\"", info.getEndIndex());
+                jsonObject.put("\"score\"", info.getScore());
+                jsonObject.put("\"resolution\"", info.getResolution());
+            }
+            catch (JSONException e){
+                System.out.print("转化失败");
+            }
+            array.put(jsonObject);
+        }
+        return array.toString();
+    }
     public String getQuery() {
         return query;
     }

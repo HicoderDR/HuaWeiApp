@@ -38,10 +38,10 @@ public class LUISAction {
     @Override
     public String toString() {
 
-        return "LUISAction{" +
-                "triggered=" + triggered +
-                ", name='" + name + '\'' +
-                ", parameters=" + parameters +
+        return "{" +
+                "\"triggered\":" + triggered +
+                ", \"name\":\"" + name + '\"' +
+                ", \"parameters\":" + parameters +
                 '}';
     }
 

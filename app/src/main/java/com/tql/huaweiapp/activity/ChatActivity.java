@@ -243,6 +243,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         String answer;
                         System.out.println(topIntent);
                         List<LUISEntity> entities = response.getEntities();
+                        System.out.println(response.toString());
                         if (entities != null && entities.size() != 0) {
                             ServerUtils.getAnswerWithEntities(response, new Handler() {
                                 @Override

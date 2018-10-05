@@ -38,10 +38,10 @@ public class LUISIntent {
 
     @Override
     public String toString() {
-        return "LUISIntent{" +
-                "name='" + name + '\'' +
-                ", score=" + score +
-                ", actions=" + LUISActionList2String() +
+        return "{" +
+                "\"name\":\"" + name + '\"' +
+                ", \"score\":" + score +
+                ", \"actions\":" + LUISActionList2String() +
                 '}';
     }
 
@@ -54,9 +54,9 @@ public class LUISIntent {
             info = actions.get(i);
             jsonObject = new JSONObject();
             try {
-                jsonObject.put("triggered", info.getTrigerred());
-                jsonObject.put("name", info.getName());
-                jsonObject.put("parameters",info.getParams());
+                jsonObject.put("\"triggered\"", info.getTrigerred());
+                jsonObject.put("\"name\"", info.getName());
+                jsonObject.put("\"parameters\"",info.getParams());
             }
             catch (JSONException e){
                 System.out.print("转化失败");
@@ -77,7 +77,5 @@ public class LUISIntent {
     public List<LUISAction> getActions() {
         return actions;
     }
-    public static void main(String args[]){
-        LUISIntent luisIntent = new LUISIntent()
-    }
+
 }
