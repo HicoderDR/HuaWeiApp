@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tql.huaweiapp.entry.User;
 
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -17,6 +18,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import com.microsoft.cognitiveservices.luis.clientlibrary.LUISClient;
+import com.microsoft.cognitiveservices.luis.clientlibrary.LUISEntity;
+import com.microsoft.cognitiveservices.luis.clientlibrary.LUISResponse;
+import com.microsoft.cognitiveservices.luis.clientlibrary.LUISResponseHandler;
+
 
 public class ServerUtils {
     private static final String REST_API = "http://39.108.180.185:8080";
@@ -32,6 +39,7 @@ public class ServerUtils {
     private static final String GET_FAVORITE = REST_API.concat("/get-favourite");
     private static final String SET_FAVORITE = REST_API.concat("/change-favourite");
     private static final String DELETE_FAVORITE = REST_API.concat("/delete-favourite");
+    private static final String GET_ANSWER_WITH_ENTITIES = REST_API.concat("/get-answer-with-entity");
     public static final int SUCCESSFUL = 0;
     public static final int FAILED = 1;
 
@@ -454,6 +462,41 @@ public class ServerUtils {
                     Message msg = new Message();
                     msg.what = SUCCESSFUL;
                     msg.obj = object.getString("data");
+                    handler.sendMessage(msg);
+                } else {
+                    Message msg = new Message();
+                    msg.what = FAILED;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
+    }
+
+    public static void getAnswerWithEntities(LUISResponse response, final Handler handler) {
+        String responseJson = JSON.toJSONString(response);
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = FormBody.create(MediaType.parse("application/json"), responseJson);
+        final Request request = new Request.Builder().url(GET_ANSWER_WITH_ENTITIES).post(body).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("Fail");
+                e.printStackTrace();
+                Message msg = new Message();
+                msg.what = FAILED;
+                handler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("Connection Successful");
+                String data = response.body().string();
+                System.out.println(data);
+                JSONObject object = JSON.parseObject(data);
+                if (object.getString("hr").equals("200")) {
+                    Message msg = new Message();
+                    msg.what = SUCCESSFUL;
                     handler.sendMessage(msg);
                 } else {
                     Message msg = new Message();

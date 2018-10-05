@@ -1,5 +1,6 @@
 package com.tql.huaweiapp.activity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -239,14 +240,32 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 LUISClient client = new LUISClient(LUISappID, LUISappKey, true);
                 client.predict(msg, new LUISResponseHandler() {
+                    @SuppressLint("HandlerLeak")
                     @Override
                     public void onSuccess(LUISResponse response) {
                         String topIntent = response.getTopIntent().getName();
+                        String answer;
                         System.out.println(topIntent);
                         List<LUISEntity> entities = response.getEntities();
-                        getAns(topIntent);
-                    }
+                        if (entities != null){
+                            ServerUtils.getAnswerWithEntities(response,new Handler(){
+                                @Override
+                                public void handleMessage(Message msg) {
+                                    super.handleMessage(msg);
+                                    if (msg.what == ServerUtils.FAILED) {
+                                        toast("发送失败");
+                                    } else {
+                                        polishAnswer(msg.obj.toString());
+                                    }
+                                }
+                            });
+                        }
+                        else{
+                            answer = getAns(topIntent);
+                            polishAnswer(answer);
+                        }
 
+                    }
                     @Override
                     public void onFailure(Exception e) {
                         System.out.println(e.getMessage());
@@ -263,30 +282,30 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //获取回答
-    private void getAns(String msg) {
+    private String getAns(String msg) {
         try {
             String response = GetAnswers(msg);
-            avatars.add(R.mipmap.default_character_avatar);
-            String answer = polishAnswer(PrettyPrint(response));
-            messages.add(answer);
-            from.add(ChatMessageAdapter.YOUR_MESSAGE);
-            CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.YOUR_MESSAGE, answer, bot_id);
+            JSONObject data = JSON.parseObject(JSON.parseObject(PrettyPrint(response)).getJSONArray("answers").getString(0));
+            System.out.println(data);
+            System.out.println("+++++++++" + data.getString("answer"));
+            String answer = data.getString("answer").trim();
+            return answer;
         } catch (Exception e) {
-            System.out.println(e);
+            return e.getMessage();
         }
     }
 
     /**
      * 整理回答格式
      *
-     * @param s
+     * @param answer
      * @return
      */
-    private String polishAnswer(String s) {
-        JSONObject data = JSON.parseObject(JSON.parseObject(s).getJSONArray("answers").getString(0));
-        System.out.println(data);
-        System.out.println("+++++++++" + data.getString("answer"));
-        return data.getString("answer").trim();//去掉前后空格和换行
+    private void polishAnswer(String answer) {
+        avatars.add(R.mipmap.default_character_avatar);
+        messages.add(answer);
+        from.add(ChatMessageAdapter.YOUR_MESSAGE);
+        CommonUtils.saveMessageToLocal(this, ChatMessageAdapter.YOUR_MESSAGE, answer, bot_id);
     }
 
     private void toast(String s) {
