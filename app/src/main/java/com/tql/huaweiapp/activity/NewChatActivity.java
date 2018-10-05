@@ -72,16 +72,17 @@ public class NewChatActivity extends AppCompatActivity implements View.OnClickLi
                 } else {
                     JSONArray array = JSON.parseArray(msg.obj.toString());
                     System.out.println(array);
-                    for (int i = 0; i < 2; i++) {
-                        JSONObject object = JSON.parseObject(array.getString(i));
-                        System.out.println(object);
-                        avatars.add(R.mipmap.default_character_avatar);
-                        names.add(object.getString("name"));
-                        informations.add(object.getString("introduction"));
-                        bot_ids.add(object.getString("botID"));
-                        System.out.println("bot_ID:"+object.getString("botID"));
-                    }
-
+                    try {
+                        for (int i = 0; ; i++) {
+                            JSONObject object = JSON.parseObject(array.getString(i));
+                            System.out.println(object);
+                            avatars.add(R.mipmap.default_character_avatar);
+                            names.add(object.getString("name"));
+                            informations.add(object.getString("introduction"));
+                            bot_ids.add(object.getString("botID"));
+                            System.out.println("bot_ID:"+object.getString("botID"));
+                        }
+                    }catch (Exception e){}
                     final CharacterListAdapter adapter = new CharacterListAdapter(avatars, names, informations, bot_ids);
                     adapter.setOnItemClickListener(new CharacterListAdapter.OnItemClickListener() {
                         @Override

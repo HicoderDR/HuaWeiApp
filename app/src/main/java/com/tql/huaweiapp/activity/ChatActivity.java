@@ -247,8 +247,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         String answer;
                         System.out.println(topIntent);
                         List<LUISEntity> entities = response.getEntities();
-                        if (entities != null){
-                            ServerUtils.getAnswerWithEntities(response,new Handler(){
+                        if (entities != null && entities.size() != 0) {
+                            ServerUtils.getAnswerWithEntities(response, new Handler() {
                                 @Override
                                 public void handleMessage(Message msg) {
                                     super.handleMessage(msg);
@@ -259,13 +259,13 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                     }
                                 }
                             });
-                        }
-                        else{
+                        } else {
                             answer = getAns(topIntent);
                             polishAnswer(answer);
                         }
 
                     }
+
                     @Override
                     public void onFailure(Exception e) {
                         System.out.println(e.getMessage());

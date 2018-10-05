@@ -1,4 +1,4 @@
-package com.tql.huaweiapp.entry;
+package com.tql.huaweiapp.entity;
 
 import java.util.Date;
 

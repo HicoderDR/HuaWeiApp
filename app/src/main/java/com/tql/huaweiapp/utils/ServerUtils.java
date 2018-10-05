@@ -5,7 +5,7 @@ import android.os.Message;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.tql.huaweiapp.entry.User;
+import com.tql.huaweiapp.entity.User;
 
 
 import java.io.IOException;
@@ -19,10 +19,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import com.microsoft.cognitiveservices.luis.clientlibrary.LUISClient;
-import com.microsoft.cognitiveservices.luis.clientlibrary.LUISEntity;
 import com.microsoft.cognitiveservices.luis.clientlibrary.LUISResponse;
-import com.microsoft.cognitiveservices.luis.clientlibrary.LUISResponseHandler;
 
 
 public class ServerUtils {
@@ -476,7 +473,7 @@ public class ServerUtils {
         String responseJson = JSON.toJSONString(response);
         OkHttpClient client = new OkHttpClient();
         RequestBody body = FormBody.create(MediaType.parse("application/json"), responseJson);
-        final Request request = new Request.Builder().url(GET_ANSWER_WITH_ENTITIES).post(body).build();
+        final Request request = new Request.Builder().url(GET_ANSWER_WITH_ENTITIES+"?StringResponse="+responseJson).post(null).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override

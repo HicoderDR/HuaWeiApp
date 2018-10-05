@@ -24,7 +24,7 @@ import com.qzs.android.fuzzybackgroundlibrary.Fuzzy_Background;
 import com.tql.huaweiapp.R;
 import com.tql.huaweiapp.constant.Gender;
 import com.tql.huaweiapp.constant.Hobby;
-import com.tql.huaweiapp.entry.User;
+import com.tql.huaweiapp.entity.User;
 import com.tql.huaweiapp.utils.CommonUtils;
 import com.tql.huaweiapp.utils.ServerUtils;
 import com.tql.huaweiapp.view.ActionSheetIOS;
