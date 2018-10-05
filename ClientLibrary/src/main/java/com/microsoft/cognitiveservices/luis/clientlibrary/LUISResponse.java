@@ -74,8 +74,6 @@ public class LUISResponse {
                 ", \"topScoringIntent\":" + topScoringIntent.toString() +
                 ", \"intents\":" +  LUISIntentList2String()+
                 ", \"entities\":" + LUISEntityList2String() +
-                ", \"compositeEntities\":" + compositeEntities.toString() +
-                ", \"dialog\":" + dialog +
                 '}';
     }
 
@@ -88,9 +86,8 @@ public class LUISResponse {
             info = intents.get(i);
             jsonObject = new JSONObject();
             try {
-                jsonObject.put("name", info.getName());
+                jsonObject.put("intent", info.getName());
                 jsonObject.put("score", info.getScore());
-                jsonObject.put("actions",info.getActions());
             }
             catch (JSONException e){
                 System.out.print("转化失败1");
@@ -109,7 +106,7 @@ public class LUISResponse {
             info = entities.get(i);
             jsonObject = new JSONObject();
             try {
-                jsonObject.put("name", info.getName().replace(" ", ""));
+                jsonObject.put("entity", info.getName().replace(" ", ""));
                 jsonObject.put("type", info.getType());
                 jsonObject.put("startIndex",info.getStartIndex());
                 jsonObject.put("endIndex", info.getEndIndex());

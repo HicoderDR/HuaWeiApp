@@ -39,9 +39,8 @@ public class LUISIntent {
     @Override
     public String toString() {
         return "{" +
-                "\"name\":\"" + name + '\"' +
+                "\"intent\":\"" + name + '\"' +
                 ", \"score\":" + score +
-                ", \"actions\":" + LUISActionList2String() +
                 '}';
     }
 
