@@ -284,8 +284,36 @@ public class ServerUtils {
     /**
      * 获取人物简介
      */
-    public static void getCharacterInfo(final Handler handler) {
+    public static void getCharacterInfo(String name, final Handler handler) {
+        OkHttpClient client = new OkHttpClient();
+        final Request request = new Request.Builder().url(GET_BOT_INTRODUCTION + "?name=" + name).get().build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("Fail");
+                e.printStackTrace();
+                handler.sendEmptyMessage(FAILED);
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("Connection Successful");
+                String data = response.body().string();
+                System.out.println(data);
+                JSONObject object = JSON.parseObject(data);
+                if (object.getString("hr").equals("200")) {
+                    Message msg = new Message();
+                    msg.what = SUCCESSFUL;
+                    msg.obj = object.getString("data");
+                    handler.sendMessage(msg);
+                } else {
+                    Message msg = new Message();
+                    msg.what = FAILED;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
     }
 
     /**
@@ -473,7 +501,7 @@ public class ServerUtils {
         String responseJson = JSON.toJSONString(response);
         OkHttpClient client = new OkHttpClient();
         RequestBody body = FormBody.create(MediaType.parse("application/json"), responseJson);
-        final Request request = new Request.Builder().url(GET_ANSWER_WITH_ENTITIES+"?StringResponse="+responseJson).post(null).build();
+        final Request request = new Request.Builder().url(GET_ANSWER_WITH_ENTITIES + "?StringResponse=" + responseJson).post(null).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override

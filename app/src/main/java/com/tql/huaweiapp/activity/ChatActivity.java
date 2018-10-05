@@ -3,7 +3,6 @@ package com.tql.huaweiapp.activity;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -83,8 +82,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final int END_AUTO_TEST = 0;
     private final static int INIT_ENGINE = 1;
-    private static final int NEXT_FILE_TEST = 2;
-    private static final int WRITE_RESULT_SD = 3;
     private static final int DELAYED_SATRT_RECORD = 4;
 
     private long startTime;
@@ -99,7 +96,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private boolean isWritePcm = false;
     private int count = 0;
 
-    private List<String> resultList = new ArrayList<>();
     private MyAsrListener mMyAsrListener = new MyAsrListener();
     private List<String> pathList = new ArrayList<>();
 
@@ -336,13 +332,29 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         pm.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                // TODO: 2018/9/17 添加“喜欢”逻辑
                 switch (menuItem.getItemId()) {
                     case R.id.introduction:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                        View view = LayoutInflater.from(ChatActivity.this).inflate(R.layout.character_profile_card, null);
-                        builder.setView(view);
-                        builder.create().show();
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                        final View view = LayoutInflater.from(ChatActivity.this).inflate(R.layout.character_profile_card, null);
+                        final TextView introduction = view.findViewById(R.id.infomation_textview);
+                        TextView name = view.findViewById(R.id.name_textview);
+                        name.setText(ChatActivity.this.name);
+                        ServerUtils.getCharacterInfo(ChatActivity.this.name, new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                if (msg.what == ServerUtils.FAILED) {
+                                    toast("获取人物简介出错！");
+                                } else {
+                                    String intro = msg.obj.toString();
+                                    System.out.println("获取人物简介："+intro);
+                                    introduction.setText(intro);
+                                }
+                                builder.setView(view);
+                                builder.create().show();
+                            }
+                        });
+
                         break;
                     case R.id.favorite:
                         final ProgressDialog dialog = getProgressDialog("正在收藏...");
@@ -473,12 +485,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     };
-
-//    public void setBtEnabled(boolean isEnabled) {
-//        stopListeningBtn.setEnabled(isEnabled);
-//        startRecord.setEnabled(isEnabled);
-//    }
-
 
     private void startRecord() {
         Log.d(TAG, "startRecord() ");

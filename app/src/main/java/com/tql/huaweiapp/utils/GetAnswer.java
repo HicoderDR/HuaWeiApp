@@ -97,12 +97,4 @@ public class GetAnswer {
         return String.format(question, que);
     }
 
-    public static void main(String[] args) {
-        try {
-            String response = GetAnswers("你好");
-            System.out.println(PrettyPrint(response));
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
 }
