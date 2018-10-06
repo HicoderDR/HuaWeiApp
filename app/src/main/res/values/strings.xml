@@ -2,4 +2,7 @@
     <string name="app_name">心跳对话</string>
     <string name="select_fiction">选择Ta</string>
     <string name="welcome">Welcome</string>
+    <string name="version">V 1.0.0</string>
+    <string name="introduction">\t心跳对话，你的专属AI男友APP。\n\t24小时聊天不断，随时随地，有“他”相伴。温柔内敛，清新卖萌，粗犷豪迈，无微不至......各式各样的小哥哥供你调戏！就等你来pick! \n\n\t你可以...... \n\n\t- 和像沈巍【来自《镇魂》】一样温柔内敛的小哥哥聊日常 \n\n\t- 和像卷福【来自《神探夏洛克》】一样睿智的男人聊学习 \n\n\t- 和像凯撒【来自《龙族》】一样自由叛逆的男人聊理想 - ...... \n\n\t- 更多风格，等你发现！</string>
+    <string name="developer_info">Developed by Team: tql</string>
 </resources>
